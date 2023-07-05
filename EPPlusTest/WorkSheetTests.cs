@@ -15,22 +15,22 @@ using System.Reflection;
 using OfficeOpenXml.Table;
 using System.Threading;
 using System.Globalization;
+using IronSoftware.Drawing;
+using Color = IronSoftware.Drawing.Color;
 
 namespace EPPlusTest
 {
-
     internal class BaseItem
     {
         public int Ref { get; set; }
         public string BaseProp1 { get; set; }
     }
+
     internal class InhItem : BaseItem
     {
         public int TophRef { get; set; }
         public string TopProp1 { get; set; }
     }
-
-
 
     [TestClass]
     public class WorkSheetTest : TestBase
@@ -109,7 +109,6 @@ namespace EPPlusTest
             var chart = _pck.Workbook.Worksheets.AddChart("ChartSheet", eChartType.ColumnClustered);
             foreach (var _n in _pck.Workbook.Names)
             {
-
             }
             //Iterate all collection and make sure no exception is thrown.
             foreach (var worksheet in _pck.Workbook.Worksheets)
@@ -118,31 +117,26 @@ namespace EPPlusTest
                 {
                     foreach (var d in worksheet.Drawings)
                     {
-
                     }
                     foreach (var d in worksheet.Tables)
                     {
-
                     }
                     foreach (var d in worksheet.PivotTables)
                     {
-
                     }
                     foreach (var d in worksheet.Names)
                     {
-
                     }
                     foreach (var d in worksheet.Comments)
                     {
-
                     }
                     foreach (var d in worksheet.ConditionalFormatting)
                     {
-
                     }
                 }
             }
         }
+
         //[Ignore]
         //[TestMethod]
         public void ReadWorkSheet()
@@ -265,18 +259,18 @@ namespace EPPlusTest
                 Assert.IsInstanceOfType(GetValueException<TimeSpan?>(ws.Cells["Y20"]), typeof(InvalidCastException));
 
                 Assert.AreEqual(ws.Cells["Z20"].GetValue<string>(), "Text2");
-                Assert.IsInstanceOfType(GetValueException<int>(         ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<int?>(        ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<double>(      ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<double?>(     ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<decimal>(     ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<decimal?>(    ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<bool>(        ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<bool?>(       ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<DateTime>(    ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<DateTime?>(   ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<TimeSpan>(    ws.Cells["Z20"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<TimeSpan?>(   ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<int>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<int?>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<double>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<double?>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<decimal>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<decimal?>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<bool>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<bool?>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<DateTime>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<DateTime?>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<TimeSpan>(ws.Cells["Z20"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<TimeSpan?>(ws.Cells["Z20"]), typeof(FormatException));
                 Assert.AreEqual(ws.Cells["Z20"].Text, "Text2");
 
                 // even though value is set as integer, it is stored/exposed by EPPlust as double; feature?
@@ -291,10 +285,10 @@ namespace EPPlusTest
                 Assert.AreEqual(ws.Cells["X19"].GetValue<bool>(), true);
                 Assert.AreEqual(ws.Cells["X19"].GetValue<bool?>(), true);
                 // double is converted to DateTime and TimeSpan, but value is meaningless
-                Assert.IsNull(GetValueException<DateTime>(    ws.Cells["X19"]));
-                Assert.IsNull(GetValueException<DateTime?>(   ws.Cells["X19"]));
-                Assert.IsNull(GetValueException<TimeSpan>(    ws.Cells["X19"]));
-                Assert.IsNull(GetValueException<TimeSpan?>(   ws.Cells["X19"]));
+                Assert.IsNull(GetValueException<DateTime>(ws.Cells["X19"]));
+                Assert.IsNull(GetValueException<DateTime?>(ws.Cells["X19"]));
+                Assert.IsNull(GetValueException<TimeSpan>(ws.Cells["X19"]));
+                Assert.IsNull(GetValueException<TimeSpan?>(ws.Cells["X19"]));
                 Assert.AreEqual(ws.Cells["X19"].Text, "210");
 
                 Assert.IsInstanceOfType(ws.Cells["AA19"].Value, typeof(string));
@@ -305,29 +299,29 @@ namespace EPPlusTest
                 Assert.AreEqual(ws.Cells["AA19"].GetValue<double?>(), 210d);
                 Assert.AreEqual(ws.Cells["AA19"].GetValue<decimal>(), 210m);
                 Assert.AreEqual(ws.Cells["AA19"].GetValue<decimal?>(), 210m);
-                Assert.IsInstanceOfType(GetValueException<bool>(        ws.Cells["AA19"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<bool?>(       ws.Cells["AA19"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<DateTime>(    ws.Cells["AA19"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<DateTime?>(   ws.Cells["AA19"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<bool>(ws.Cells["AA19"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<bool?>(ws.Cells["AA19"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<DateTime>(ws.Cells["AA19"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<DateTime?>(ws.Cells["AA19"]), typeof(FormatException));
                 Assert.AreEqual(TimeSpan.FromDays(210), ws.Cells["AA19"].GetValue<TimeSpan>());
                 Assert.AreEqual(TimeSpan.FromDays(210), ws.Cells["AA19"].GetValue<TimeSpan?>());
                 Assert.AreEqual(ws.Cells["AA19"].Text, "210");
 
                 // blank string produces null for nullable primitive types and conversion to non-nullable types throws FormatException
                 Assert.IsInstanceOfType(ws.Cells["AA18"].Value, typeof(string));
-                Assert.IsInstanceOfType(GetValueException<int>(         ws.Cells["AA18"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<double>(      ws.Cells["AA18"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<decimal>(     ws.Cells["AA18"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<bool>(        ws.Cells["AA18"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<DateTime>(    ws.Cells["AA18"]), typeof(FormatException));
-                Assert.IsInstanceOfType(GetValueException<TimeSpan>(    ws.Cells["AA18"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<int>(ws.Cells["AA18"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<double>(ws.Cells["AA18"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<decimal>(ws.Cells["AA18"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<bool>(ws.Cells["AA18"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<DateTime>(ws.Cells["AA18"]), typeof(FormatException));
+                Assert.IsInstanceOfType(GetValueException<TimeSpan>(ws.Cells["AA18"]), typeof(FormatException));
 
-                Assert.IsNull(GetValueException<int?>(        ws.Cells["AA18"]));
-                Assert.IsNull(GetValueException<double?>(     ws.Cells["AA18"]));
-                Assert.IsNull(GetValueException<decimal?>(    ws.Cells["AA18"]));
-                Assert.IsNull(GetValueException<bool?>(       ws.Cells["AA18"]));
-                Assert.IsNull(GetValueException<DateTime?>(   ws.Cells["AA18"]));
-                Assert.IsNull(GetValueException<TimeSpan?>(   ws.Cells["AA18"]));
+                Assert.IsNull(GetValueException<int?>(ws.Cells["AA18"]));
+                Assert.IsNull(GetValueException<double?>(ws.Cells["AA18"]));
+                Assert.IsNull(GetValueException<decimal?>(ws.Cells["AA18"]));
+                Assert.IsNull(GetValueException<bool?>(ws.Cells["AA18"]));
+                Assert.IsNull(GetValueException<DateTime?>(ws.Cells["AA18"]));
+                Assert.IsNull(GetValueException<TimeSpan?>(ws.Cells["AA18"]));
                 Assert.AreEqual(ws.Cells["AA18"].Text, " ");
             }
             instream.Close();
@@ -368,6 +362,7 @@ namespace EPPlusTest
             }
             instream.Close();
         }
+
         //[Ignore]
         //[TestMethod]
         public void ReadStreamSaveAsStream()
@@ -387,6 +382,7 @@ namespace EPPlusTest
             }
             instream.Close();
         }
+
         //
         // You can use the following additional attributes as you write your tests:
         //
@@ -472,7 +468,6 @@ namespace EPPlusTest
             ws.Workbook.Names.Add("TestName", ws.Cells["B30:E30"]);
             ws.Workbook.Names["TestName"].Style.Font.Color.SetColor(Color.Red);
 
-
             ws.Workbook.Names["TestName"].Offset(1, 0).Value = "Offset test 1";
             ws.Workbook.Names["TestName"].Offset(2, -1, 2, 2).Value = "Offset test 2";
 
@@ -484,7 +479,6 @@ namespace EPPlusTest
             ws.Cells["E21"].Value = "Superscript";
             ws.Cells["E21"].Style.Font.VerticalAlign = ExcelVerticalAlignmentFont.Superscript;
             ws.Cells["E21"].Style.Font.VerticalAlign = ExcelVerticalAlignmentFont.None;
-
 
             ws.Cells["E22"].Value = "Indent 2";
             ws.Cells["E22"].Style.Indent = 2;
@@ -544,12 +538,11 @@ namespace EPPlusTest
             _pck.Workbook.Properties.Status = "Status";
             _pck.Workbook.Properties.HyperlinkBase = new Uri("http://serversideexcel.com", UriKind.Absolute);
             _pck.Workbook.Properties.Manager = "Manager";
-            _pck.Workbook.Properties.AppVersion="4.5.0.1";
+            _pck.Workbook.Properties.AppVersion = "4.5.0.1";
             _pck.Workbook.Properties.LinksUpToDate = false;
             _pck.Workbook.Properties.HyperlinksChanged = false;
             _pck.Workbook.Properties.SharedDoc = false;
             _pck.Workbook.Properties.ScaleCrop = false;
-
 
             _pck.Workbook.Properties.SetCustomPropertyValue("DateTest", new DateTime(2008, 12, 31));
             Console.WriteLine(_pck.Workbook.Properties.GetCustomPropertyValue("DateTest").ToString());
@@ -559,7 +552,9 @@ namespace EPPlusTest
             _pck.Workbook.Properties.SetCustomPropertyValue("LargeNo", 123456789123);
             _pck.Workbook.Properties.SetCustomPropertyValue("Author", 3);
         }
-        const int PERF_ROWS = 5000;
+
+        private const int PERF_ROWS = 5000;
+
         //[Ignore]
         //[TestMethod]
         public void Performance()
@@ -618,6 +613,7 @@ namespace EPPlusTest
             ws.Cells["a1:B12"].Style.Hidden = true;
             Console.WriteLine("EndTime {0}", DateTime.Now);
         }
+
         //[Ignore]
         //[TestMethod]
         public void InsertDeleteTestRows()
@@ -638,7 +634,6 @@ namespace EPPlusTest
             ws.Cells["a1:B12"].Style.Hidden = true;
             ws.Protection.IsProtected = true;
             ws.Protection.SetPassword("Password");
-
 
             var range = ws.Cells["B2:D100"];
 
@@ -668,6 +663,7 @@ namespace EPPlusTest
             Assert.AreEqual(addr.End.Column, 4);
             Assert.AreEqual(addr.End.Row, 3);
         }
+
         //[Ignore]
         //[TestMethod]
         public void InsertDeleteTestColumns()
@@ -693,7 +689,6 @@ namespace EPPlusTest
             ws.Cells["C1:Y12"].Style.Hidden = true;
             ws.Protection.IsProtected = true;
             ws.Protection.SetPassword("Password");
-
 
             var range = ws.Cells["X2:Z100"];
 
@@ -723,6 +718,7 @@ namespace EPPlusTest
             //Assert.AreEqual(addr.End.Column, 4);
             //Assert.AreEqual(addr.End.Row, 3);
         }
+
         //[Ignore]
         //[TestMethod]
         public void RichTextCells()
@@ -763,7 +759,6 @@ namespace EPPlusTest
             r6.Color = Color.Red;
             r6.UnderLine = true;
 
-
             rs = ws.Cells["C8"].RichText;
             r1 = rs.Add("Blue ");
             r1.Color = Color.Blue;
@@ -783,6 +778,7 @@ namespace EPPlusTest
             ws.Cells["G3"].RichText.Add(" a new t");
             ws.Cells["G3"].RichText[1].Bold = false;
         }
+
         //[Ignore]
         //[TestMethod]
         public void TestComments()
@@ -814,8 +810,8 @@ namespace EPPlusTest
 
             var rt2 = ws.Cells["B2"].AddComment("Range Added Comment test test test test test test test test test test testtesttesttesttesttesttesttesttesttesttest", "Jan Källman");
             ws.Cells["c3"].Comment.AutoFit = true;
-
         }
+
         //[Ignore]
         //[TestMethod]
         public void Address()
@@ -851,6 +847,7 @@ namespace EPPlusTest
             namedStyle.Style.Font.UnderLineType = ExcelUnderLineType.Single;
             namedStyle.Style.Font.Color.SetColor(Color.Blue);
         }
+
         //[Ignore]
         //[TestMethod]
         public void Encoding()
@@ -861,6 +858,7 @@ namespace EPPlusTest
             ws.Cells["A3"].Value = "_x0097_ test_x001D_1234";
             ws.Cells["A4"].Value = "test" + (char)31;   //Bug issue 14689 //Fixed
         }
+
         //[Ignore]
         //[TestMethod]
         public void WorksheetCopy()
@@ -874,6 +872,7 @@ namespace EPPlusTest
             pck2 = null;
             Assert.AreEqual(6, wsCopy.Comments.Count);
         }
+
         [Ignore]
         [TestMethod]
         public void TestDelete()
@@ -891,6 +890,7 @@ namespace EPPlusTest
 
             pack.Save();
         }
+
         //[Ignore]
         //[TestMethod]
         public void LoadFromCollectionTest()
@@ -918,15 +918,15 @@ namespace EPPlusTest
 
             ws = _pck.Workbook.Worksheets.Add("LoadFromCollection_Inherited");
             List<InheritTestDTO> inhList = new List<InheritTestDTO>();
-            inhList.Add(new InheritTestDTO() { Id = 1, Name = "Item1", Boolean = false, Date = new DateTime(2011, 1, 1), dto = null, NameVar = "Field 1", InheritedProp="Inherited 1" });
+            inhList.Add(new InheritTestDTO() { Id = 1, Name = "Item1", Boolean = false, Date = new DateTime(2011, 1, 1), dto = null, NameVar = "Field 1", InheritedProp = "Inherited 1" });
             inhList.Add(new InheritTestDTO() { Id = 2, Name = "Item2", Boolean = true, Date = new DateTime(2011, 1, 15), dto = new TestDTO(), NameVar = "Field 2", InheritedProp = "Inherited 2" });
             ws.Cells["A1"].LoadFromCollection(inhList, true);
             Assert.AreEqual("Inherited 2", ws.Cells[3, 1].Value);
 
-            ws.Cells["A5"].LoadFromCollection(inhList, true, TableStyles.None, BindingFlags.Public | BindingFlags.Instance, new MemberInfo[]{typeof(InheritTestDTO).GetProperty("InheritedProp"), typeof(TestDTO).GetProperty("Name") });
+            ws.Cells["A5"].LoadFromCollection(inhList, true, TableStyles.None, BindingFlags.Public | BindingFlags.Instance, new MemberInfo[] { typeof(InheritTestDTO).GetProperty("InheritedProp"), typeof(TestDTO).GetProperty("Name") });
             Assert.AreEqual("Inherited 2", ws.Cells[7, 1].Value);
-
         }
+
         //[TestMethod]
         public void LoadFromEmptyCollectionTest()
         {
@@ -943,6 +943,7 @@ namespace EPPlusTest
 
             ws.Cells["A20"].LoadFromCollection(listDTO, false);
         }
+
         [TestMethod]
         public void LoadFromOneCollectionTest()
         {
@@ -956,7 +957,8 @@ namespace EPPlusTest
             var r2 = ws.Cells["A5"].LoadFromCollection(listDTO, false);
             Assert.AreEqual(1, r2.Rows);
         }
-        static void Create(string file)
+
+        private static void Create(string file)
         {
             ExcelPackage pack = new ExcelPackage(new FileInfo(file));
             ExcelWorksheet w = pack.Workbook.Worksheets.Add("delete");
@@ -970,6 +972,7 @@ namespace EPPlusTest
             w.Cells[4, 2].Value = "C3+D3";
             pack.Save();
         }
+
         [Ignore]
         [TestMethod]
         public void RowStyle()
@@ -993,8 +996,8 @@ namespace EPPlusTest
             ws.Row(1).Style.Font.Bold = true;
             ws.Column(1).Style.Font.Bold = true;
             package.SaveAs(newFile);
-
         }
+
         //[Ignore]
         //[TestMethod]
         public void HideTest()
@@ -1003,6 +1006,7 @@ namespace EPPlusTest
             ws.Cells["A1"].Value = "This workbook is hidden";
             ws.Hidden = eWorkSheetHidden.Hidden;
         }
+
         //[Ignore]
         //[TestMethod]
         public void Hyperlink()
@@ -1013,6 +1017,7 @@ namespace EPPlusTest
             ws.Cells["A1"].Hyperlink = hl;
             //ws.Cells["A2"].Hyperlink = new ExcelHyperLink("mailto:ecsomany@google:huszar", UriKind.Absolute); //Invalid URL will throw an Exception
         }
+
         //[Ignore]
         //[TestMethod]
         public void VeryHideTest()
@@ -1021,6 +1026,7 @@ namespace EPPlusTest
             ws.Cells["a1"].Value = "This workbook is hidden";
             ws.Hidden = eWorkSheetHidden.VeryHidden;
         }
+
         //[Ignore]
         //[TestMethod]
         public void PrinterSettings()
@@ -1060,6 +1066,7 @@ namespace EPPlusTest
             ws.PrinterSettings.Orientation = eOrientation.Landscape;
             ws.PrinterSettings.PaperSize = ePaperSize.A4;
         }
+
         //[Ignore]
         //[TestMethod]
         public void StyleNameTest()
@@ -1084,6 +1091,7 @@ namespace EPPlusTest
             ws.Cells["A1:C4"].Style.Locked = false;
             ws.Protection.IsProtected = true;
         }
+
         //[Ignore]
         //[TestMethod]
         public void ValueError()
@@ -1095,7 +1103,8 @@ namespace EPPlusTest
             Console.WriteLine(rt.Bold.ToString());
             rt.Bold = true;
             Console.WriteLine(rt.Bold.ToString());
-        }   
+        }
+
         //[Ignore]
         //[TestMethod]
         public void FormulaError()
@@ -1111,6 +1120,7 @@ namespace EPPlusTest
 
             //ws.Cells["B2:I2"].Formula = "";   //Error
         }
+
         [TestMethod, Ignore]
         public void FormulaArray()
         {
@@ -1120,6 +1130,7 @@ namespace EPPlusTest
             ws.Cells["E2:E5"].CreateArrayFormula("FREQUENCY(B2:B18,C2:C5)");
             _pck.SaveAs(new FileInfo("c:\\temp\\arrayformula.xlsx"));
         }
+
         //[Ignore]
         //[TestMethod]
         public void PictureURL()
@@ -1131,6 +1142,7 @@ namespace EPPlusTest
 
             ws.Drawings.AddPicture("Pic URI", Properties.Resources.Test1, hl);
         }
+
         [TestMethod]
         public void PivotTableTest()
         {
@@ -1144,7 +1156,7 @@ namespace EPPlusTest
                 new object [] { 1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
             });
             var table = ws.Tables.Add(ws.Cells["A1:D4"], "PivotData");
-            var pt=ws.PivotTables.Add(ws.Cells["G20"], ws.Cells["A1:D4"], "PivotTable1");
+            var pt = ws.PivotTables.Add(ws.Cells["G20"], ws.Cells["A1:D4"], "PivotTable1");
             pt.ColumnFields.Add(pt.Fields[1]);
             pt.DataFields.Add(pt.Fields[3]);
             Assert.AreEqual("PivotStyleMedium9", ws.PivotTables["PivotTable1"].StyleName);
@@ -1152,7 +1164,6 @@ namespace EPPlusTest
             _pck.Workbook.Worksheets.AddChart("PivotChartWorksheet", eChartType.Line, pt);
             SaveWorksheet("Pivot.xlsx");
         }
-
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
@@ -1198,6 +1209,7 @@ namespace EPPlusTest
                 Assert.AreEqual("SUBTOTAL(109,TestTable['['#''Column''2']])", ws.Cells["C3"].Formula);
             }
         }
+
         [TestMethod]
         public void InsertRowsSetsOutlineLevel()
         {
@@ -1456,6 +1468,7 @@ namespace EPPlusTest
         {
             _pck.Workbook.Worksheets.Copy("File4", "Copied table");
         }
+
         //[Ignore]
         //[TestMethod]
         public void CopyRange()
@@ -1469,6 +1482,7 @@ namespace EPPlusTest
             ws.Cells["G4:H5"].Merge = true;
             ws.Cells["B3:C5"].Copy(ws.Cells["G4"]);
         }
+
         //[Ignore]
         //[TestMethod]
         public void CopyMergedRange()
@@ -1491,6 +1505,7 @@ namespace EPPlusTest
 
             //Assert.AreNotEqual(a21.MergeId, a22.MergeId);
         }
+
         [Ignore]
         [TestMethod]
         public void CopyPivotTable()
@@ -1498,6 +1513,7 @@ namespace EPPlusTest
             _pck.Workbook.Worksheets.Copy("Pivot-Group Date", "Copied Pivottable 1");
             _pck.Workbook.Worksheets.Copy("Pivot-Group Number", "Copied Pivottable 2");
         }
+
         [Ignore]
         [TestMethod]
         public void Stylebug()
@@ -1535,6 +1551,7 @@ namespace EPPlusTest
             ws.InsertRow(33, 1, 33);
             p.SaveAs(new FileInfo(@"c:\temp\FullProjecte_new.xlsx"));
         }
+
         [Ignore]
         [TestMethod]
         public void ReadBug()
@@ -1547,6 +1564,7 @@ namespace EPPlusTest
                 .ToList();
             }
         }
+
         //[Ignore]
         //[TestMethod]
         public void FormulaOverwrite()
@@ -1555,7 +1573,6 @@ namespace EPPlusTest
             //Inside
             ws.Cells["A1:G12"].Formula = "B1+C1";
             ws.Cells["B2:C3"].Formula = "G2+E1";
-
 
             //Top bottom overwrite
             ws.Cells["A14:G26"].Formula = "B1+C1+D1";
@@ -1578,6 +1595,7 @@ namespace EPPlusTest
             ws.Cells["J1:J3"].Formula = "F2+F3";
             ws.Cells["F1:F3"].Formula = "F5+F6";    //Overwrite same range
         }
+
         //[Ignore]
         //[TestMethod]
         public void DefinedName()
@@ -1596,6 +1614,7 @@ namespace EPPlusTest
 
             ws.Names.AddFormula("Formula", "Names!A2+Names!A3+Names!Value");
         }
+
         [Ignore]
         [TestMethod]
         public void URL()
@@ -1603,7 +1622,6 @@ namespace EPPlusTest
             var p = new ExcelPackage(new FileInfo(@"c:\temp\url.xlsx"));
             foreach (var ws in p.Workbook.Worksheets)
             {
-
             }
             p.SaveAs(new FileInfo(@"c:\temp\urlsaved.xlsx"));
         }
@@ -1657,6 +1675,7 @@ namespace EPPlusTest
                 Assert.AreEqual(6, range.End.Row);
             }
         }
+
         //[TestMethod, Ignore]
         public void LoadDataTable()
         {
@@ -1668,7 +1687,6 @@ namespace EPPlusTest
             dt.Columns.Add("Int", typeof(int));
             dt.Columns.Add("Bool", typeof(bool));
             dt.Columns.Add("Double", typeof(double));
-
 
             var dr = dt.NewRow();
             dr[0] = "Row1";
@@ -1713,6 +1731,7 @@ namespace EPPlusTest
 
             ws.Cells["D1"].LoadFromDataTable(dt, false);
         }
+
         [TestMethod]
         public void LoadText_Bug15015()
         {
@@ -1752,8 +1771,8 @@ namespace EPPlusTest
             ws.Cells["A4"].LoadFromText("\"1,3\",\"\",\"12,2\",\"Test\"\"\"", new ExcelTextFormat() { TextQualifier = '"' });
 
             ws = _pck.Workbook.Worksheets.Add("File1");
-            if(File.Exists(@"c:\temp\csv\et1c1004.csv"))
-                ws.Cells["A1"].LoadFromText(new FileInfo(@"c:\temp\csv\et1c1004.csv"), new ExcelTextFormat() {SkipLinesBeginning=3,SkipLinesEnd=1, EOL="\n"});
+            if (File.Exists(@"c:\temp\csv\et1c1004.csv"))
+                ws.Cells["A1"].LoadFromText(new FileInfo(@"c:\temp\csv\et1c1004.csv"), new ExcelTextFormat() { SkipLinesBeginning = 3, SkipLinesEnd = 1, EOL = "\n" });
 
             ws = _pck.Workbook.Worksheets.Add("File2");
             if (File.Exists(@"c:\temp\csv\etiv2812.csv"))
@@ -1761,7 +1780,7 @@ namespace EPPlusTest
 
             ws = _pck.Workbook.Worksheets.Add("File3");
             if (File.Exists(@"c:\temp\csv\last_gics.txt"))
-                ws.Cells["A1"].LoadFromText(new FileInfo(@"c:\temp\csv\last_gics.txt"), new ExcelTextFormat() { SkipLinesBeginning = 1, Delimiter='|'});
+                ws.Cells["A1"].LoadFromText(new FileInfo(@"c:\temp\csv\last_gics.txt"), new ExcelTextFormat() { SkipLinesBeginning = 1, Delimiter = '|' });
 
             ws = _pck.Workbook.Worksheets.Add("File4");
             //if (File.Exists(@"c:\temp\csv\20060927.custom_open_positions.cdf.SPP"))
@@ -1779,6 +1798,7 @@ namespace EPPlusTest
             //tbl.TotalsRowCellStyle = "RedStyle";
             //tbl.HeaderRowCellStyle = "RedStyle";
         }
+
         [TestMethod]
         public void TestRepeatRowsAndColumnsTest()
         {
@@ -1792,6 +1812,7 @@ namespace EPPlusTest
             Assert.IsNotNull(w.PrinterSettings.RepeatColumns);
             Assert.IsNotNull(w.PrinterSettings.RepeatRows); // Fails!
         }
+
         //[Ignore]
         //[TestMethod]
         public void Merge()
@@ -1805,6 +1826,7 @@ namespace EPPlusTest
             ws.Cells["AA:AC"].Merge = true;
             ws.SetValue(13, 4, "Merged\r\nnew row");
         }
+
         //[Ignore]
         //[TestMethod]
         public void DefaultColWidth()
@@ -1812,6 +1834,7 @@ namespace EPPlusTest
             var ws = _pck.Workbook.Worksheets.Add("DefColWidth");
             ws.DefaultColWidth = 45;
         }
+
         //[Ignore]
         //[TestMethod]
         public void LoadArray()
@@ -1820,6 +1843,7 @@ namespace EPPlusTest
             List<object[]> testArray = new List<object[]>() { new object[] { 3, 4, 5, 6 }, new string[] { "Test1", "test", "5", "6" } };
             ws.Cells["A1"].LoadFromArrays(testArray);
         }
+
         [Ignore]
         [TestMethod]
         public void DefColWidthBug()
@@ -1869,8 +1893,8 @@ namespace EPPlusTest
 
             // return the filled Excel workbook
             //  return pkg
-
         }
+
         [Ignore]
         [TestMethod]
         public void CloseProblem()
@@ -1883,7 +1907,7 @@ namespace EPPlusTest
             using (ExcelRange r = ws.Cells["A1:F1"])
             {
                 r.Merge = true;
-                r.Style.Font.SetFromFont(new Font("Arial", 18, FontStyle.Italic));
+                r.Style.Font.SetFromFont(new Font("Arial", FontStyle.Italic, 18));
                 r.Style.Font.Color.SetColor(Color.DarkRed);
                 r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
                 //r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
@@ -1892,7 +1916,6 @@ namespace EPPlusTest
             //			ws.Column(1).BestFit = true;
             ws.Column(1).Width = 17;
             ws.Column(5).Width = 20;
-
 
             ws.Cells["A2"].Value = "Date Produced";
 
@@ -1915,6 +1938,7 @@ namespace EPPlusTest
             }
             pck.SaveAs(new FileInfo(".\\test.xlsx"));
         }
+
         [Ignore]
         [TestMethod]
         public void OpenXlsm()
@@ -1923,6 +1947,7 @@ namespace EPPlusTest
             int c = p.Workbook.Worksheets.Count;
             p.Save();
         }
+
         [Ignore]
         [TestMethod]
         public void Mergebug()
@@ -1943,6 +1968,7 @@ namespace EPPlusTest
             xlWorkSheet.Row(1).Height = 50;
             xlPackage.SaveAs(new FileInfo("c:\\temp\\Mergebug.xlsx"));
         }
+
         [Ignore]
         [TestMethod]
         public void OpenProblem()
@@ -1955,6 +1981,7 @@ namespace EPPlusTest
             ws.Cells["B1:B10"].FormulaR1C1 = "W2!R1C1+C1";
             xlPackage.SaveAs(new FileInfo("c:\\temp\\Mergebug.xlsx"));
         }
+
         [Ignore]
         [TestMethod]
         public void ProtectionProblem()
@@ -1964,6 +1991,7 @@ namespace EPPlusTest
             ws.Protection.SetPassword("Test");
             xlPackage.SaveAs(new FileInfo("c:\\temp\\Mergebug.xlsx"));
         }
+
         [Ignore]
         [TestMethod]
         public void Nametest()
@@ -1973,6 +2001,7 @@ namespace EPPlusTest
             ws.Cells["H37"].Formula = "\"Test\"";
             pck.SaveAs(new FileInfo(@"c:\\temp\\nametest_new.xlsx"));
         }
+
         //[Ignore]
         //[TestMethod]
         public void CreatePivotTable()
@@ -2173,8 +2202,8 @@ namespace EPPlusTest
             pt.RowHeaderCaption = "Row Caption";
 
             //wsPivot10.Drawings.AddChart("Pivotchart10", OfficeOpenXml.Drawing.Chart.eChartType.BarStacked3D, pt);
-
         }
+
         [Ignore]
         [TestMethod]
         public void ReadPivotTable()
@@ -2206,6 +2235,7 @@ namespace EPPlusTest
 
             pck.SaveAs(new FileInfo(@"c:\temp\pivot\pivotforread_new.xlsx"));
         }
+
         [Ignore]
         [TestMethod]
         public void CreatePivotMultData()
@@ -2243,6 +2273,7 @@ namespace EPPlusTest
 
             pck.Save();
         }
+
         //[Ignore]
         [TestMethod]
         public void SetBackground()
@@ -2253,11 +2284,11 @@ namespace EPPlusTest
             ws = _pck.Workbook.Worksheets.Add("backimg2");
             ws.BackgroundImage.SetFromFile(new FileInfo(Path.Combine(_clipartPath, "Vector Drawing.wmf")));
         }
+
         //[Ignore]
         [TestMethod]
         public void SetHeaderFooterImage()
         {
-
             var ws = _pck.Workbook.Worksheets.Add("HeaderImage");
             ws.HeaderFooter.OddHeader.CenteredText = "Before ";
             var img = ws.HeaderFooter.OddHeader.InsertPicture(Properties.Resources.Test1, PictureAlignment.Centered);
@@ -2275,7 +2306,6 @@ namespace EPPlusTest
             Assert.AreEqual(img.Top, 0);
             ws.HeaderFooter.OddHeader.CenteredText += " After";
 
-
             //img = ws.HeaderFooter.EvenFooter.InsertPicture(new FileInfo(Path.Combine(_clipartPath,"Vector Drawing.wmf")), PictureAlignment.Left);
             //img.Title = "DiskFile";
 
@@ -2285,6 +2315,7 @@ namespace EPPlusTest
 
             _pck.Workbook.Worksheets.Copy(ws.Name, "Copied HeaderImage");
         }
+
         //[Ignore]
         //[TestMethod]
         public void NamedStyles()
@@ -2335,8 +2366,8 @@ namespace EPPlusTest
             Assert.AreEqual(18, defaultStyle.Style.Font.Size);
 
             Assert.AreEqual(boldStyle.Style.Font.Color.Rgb, "FFFF0000");
-
         }
+
         //[Ignore]
         //[TestMethod]
         public void StyleFill()
@@ -2347,7 +2378,7 @@ namespace EPPlusTest
             ws.Cells["A1:C3"].Style.Fill.Gradient.Color2.SetColor(Color.Blue);
 
             ws.Cells["J20:J23"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            ws.Cells["J20:J23"].Style.Fill.BackgroundColor.SetColor(0xFF,0x00,0XFF,0x00); //Green
+            ws.Cells["J20:J23"].Style.Fill.BackgroundColor.SetColor(0xFF, 0x00, 0XFF, 0x00); //Green
 
             ws.Cells["A1"].Style.Fill.PatternType = ExcelFillStyle.MediumGray;
             ws.Cells["A1"].Style.Fill.BackgroundColor.SetColor(Color.ForestGreen);
@@ -2379,6 +2410,7 @@ namespace EPPlusTest
             ws.Cells.AutoFilter = true;
             Assert.AreNotEqual(ws.Cells["A1:D5"].Value, null);
         }
+
         [Ignore]
         [TestMethod]
         public void BuildInStyles()
@@ -2404,6 +2436,7 @@ namespace EPPlusTest
             //  n.CustomBuildin = true;
             pck.SaveAs(new FileInfo(@"c:\temp\style.xlsx"));
         }
+
         //[Ignore]
         //[TestMethod]
         public void AutoFitColumns()
@@ -2421,6 +2454,7 @@ namespace EPPlusTest
 
             ws.Column(40).AutoFit();
         }
+
         [TestMethod, Ignore]
         public void Moveissue()
         {
@@ -2428,6 +2462,7 @@ namespace EPPlusTest
             _pck.Workbook.Worksheets[1].DeleteRow(2, 4);
             _pck.SaveAs(new FileInfo(@"c:\temp\move.xlsx"));
         }
+
         [TestMethod, Ignore]
         public void DelCol()
         {
@@ -2435,6 +2470,7 @@ namespace EPPlusTest
             _pck.Workbook.Worksheets[1].DeleteColumn(5, 1);
             _pck.SaveAs(new FileInfo(@"c:\temp\move.xlsx"));
         }
+
         [TestMethod, Ignore]
         public void InsCol()
         {
@@ -2442,6 +2478,7 @@ namespace EPPlusTest
             _pck.Workbook.Worksheets[1].InsertColumn(4, 5);
             _pck.SaveAs(new FileInfo(@"c:\temp\move.xlsx"));
         }
+
         [Ignore]
         [TestMethod]
         public void FileLockedProblem()
@@ -2453,6 +2490,7 @@ namespace EPPlusTest
                 pck.Dispose();
             }
         }
+
         //[Ignore]
         //[TestMethod]
         public void CopyOverwrite()
@@ -2468,6 +2506,7 @@ namespace EPPlusTest
             }
             ws.Cells["A1:P30"].Copy(ws.Cells["B1"]);
         }
+
         [Ignore]
         [TestMethod]
         public void RunSample0()
@@ -2490,6 +2529,7 @@ namespace EPPlusTest
                 package.Save();
             }
         }
+
         [Ignore]
         [TestMethod]
         public void Deletews()
@@ -2533,7 +2573,6 @@ namespace EPPlusTest
                     }
 
                     wb.Dispose();
-
                 } //if wb != null
 
                 wb = null;
@@ -2599,54 +2638,54 @@ namespace EPPlusTest
                 Assert.AreEqual("'Sheet2'!M3", sheet1.Cells[2, 2].Formula);
                 Assert.AreEqual("Hello, world!", sheet1.Cells[2, 2].Value);
             }
-    }
+        }
 
-    [TestMethod]
-    public void CrossSheetInsertRowAfterReferencesHasNoEffect()
-    {
-      FileInfo file = new FileInfo("report.xlsx");
-      using (ExcelPackage package = new ExcelPackage(file))
-      {
-        var sheet = package.Workbook.Worksheets.Add("New Sheet");
-        var otherSheet = package.Workbook.Worksheets.Add("Other Sheet");
-        sheet.Cells[3, 3].Formula = "'Other Sheet'!C3";
-        otherSheet.Cells[3, 3].Formula = "45";
-        otherSheet.InsertRow(5, 1);
-        Assert.AreEqual("'Other Sheet'!C3", sheet.Cells[3, 3].Formula);
-      }
-    }
+        [TestMethod]
+        public void CrossSheetInsertRowAfterReferencesHasNoEffect()
+        {
+            FileInfo file = new FileInfo("report.xlsx");
+            using (ExcelPackage package = new ExcelPackage(file))
+            {
+                var sheet = package.Workbook.Worksheets.Add("New Sheet");
+                var otherSheet = package.Workbook.Worksheets.Add("Other Sheet");
+                sheet.Cells[3, 3].Formula = "'Other Sheet'!C3";
+                otherSheet.Cells[3, 3].Formula = "45";
+                otherSheet.InsertRow(5, 1);
+                Assert.AreEqual("'Other Sheet'!C3", sheet.Cells[3, 3].Formula);
+            }
+        }
 
-    [TestMethod]
-    public void CrossSheetInsertColumnAfterReferencesHasNoEffect()
-    {
-      FileInfo file = new FileInfo("report.xlsx");
-      using (ExcelPackage package = new ExcelPackage(file))
-      {
-        var sheet = package.Workbook.Worksheets.Add("New Sheet");
-        var otherSheet = package.Workbook.Worksheets.Add("Other Sheet");
-        sheet.Cells[3, 3].Formula = "'Other Sheet'!C3";
-        otherSheet.Cells[3, 3].Formula = "45";
-        otherSheet.InsertColumn(5, 1);
-        Assert.AreEqual("'Other Sheet'!C3", sheet.Cells[3, 3].Formula);
-      }
-    }
+        [TestMethod]
+        public void CrossSheetInsertColumnAfterReferencesHasNoEffect()
+        {
+            FileInfo file = new FileInfo("report.xlsx");
+            using (ExcelPackage package = new ExcelPackage(file))
+            {
+                var sheet = package.Workbook.Worksheets.Add("New Sheet");
+                var otherSheet = package.Workbook.Worksheets.Add("Other Sheet");
+                sheet.Cells[3, 3].Formula = "'Other Sheet'!C3";
+                otherSheet.Cells[3, 3].Formula = "45";
+                otherSheet.InsertColumn(5, 1);
+                Assert.AreEqual("'Other Sheet'!C3", sheet.Cells[3, 3].Formula);
+            }
+        }
 
-    [TestMethod]
-    public void CrossSheetReferenceIsUpdatedWhenSheetIsRenamed()
-    {
-      FileInfo file = new FileInfo("report.xlsx");
-      using (ExcelPackage package = new ExcelPackage(file))
-      {
-        var sheet = package.Workbook.Worksheets.Add("New Sheet");
-        var otherSheet = package.Workbook.Worksheets.Add("Other Sheet");
-        sheet.Cells[3, 3].Formula = "'Other Sheet'!C3";
-        otherSheet.Cells[3, 3].Formula = "45";
-        otherSheet.Name = "New Name";
-        Assert.AreEqual("'New Name'!C3", sheet.Cells[3, 3].Formula);
-      }
-    }
-    
-    [TestMethod]
+        [TestMethod]
+        public void CrossSheetReferenceIsUpdatedWhenSheetIsRenamed()
+        {
+            FileInfo file = new FileInfo("report.xlsx");
+            using (ExcelPackage package = new ExcelPackage(file))
+            {
+                var sheet = package.Workbook.Worksheets.Add("New Sheet");
+                var otherSheet = package.Workbook.Worksheets.Add("Other Sheet");
+                sheet.Cells[3, 3].Formula = "'Other Sheet'!C3";
+                otherSheet.Cells[3, 3].Formula = "45";
+                otherSheet.Name = "New Name";
+                Assert.AreEqual("'New Name'!C3", sheet.Cells[3, 3].Formula);
+            }
+        }
+
+        [TestMethod]
         public void CopyCellUpdatesRelativeCrossSheetReferencesCorrectly()
         {
             using (var package = new ExcelPackage())
@@ -2756,7 +2795,8 @@ namespace EPPlusTest
             }
         }
 
-#region Date1904 Test Cases
+        #region Date1904 Test Cases
+
         [TestMethod]
         public void TestDate1904WithoutSetting()
         {
@@ -2773,7 +2813,6 @@ namespace EPPlusTest
             w.Cells[1, 1].Value = dateTest1;
             w.Cells[2, 1].Value = dateTest2;
             pack.Save();
-
 
             ExcelPackage pack2 = new ExcelPackage(new FileInfo(file));
             ExcelWorksheet w2 = pack2.Workbook.Worksheets["test"];
@@ -2801,7 +2840,6 @@ namespace EPPlusTest
             w.Cells[2, 1].Value = dateTest2;
             pack.Save();
 
-
             ExcelPackage pack2 = new ExcelPackage(new FileInfo(file));
             ExcelWorksheet w2 = pack2.Workbook.Worksheets["test"];
 
@@ -2828,11 +2866,9 @@ namespace EPPlusTest
             w.Cells[2, 1].Value = dateTest2;
             pack.Save();
 
-
             ExcelPackage pack2 = new ExcelPackage(new FileInfo(file));
             pack2.Workbook.Date1904 = false;
             pack2.Save();
-
 
             ExcelPackage pack3 = new ExcelPackage(new FileInfo(file));
             ExcelWorksheet w3 = pack3.Workbook.Worksheets["test"];
@@ -2860,11 +2896,9 @@ namespace EPPlusTest
             w.Cells[2, 1].Value = dateTest2;
             pack.Save();
 
-
             ExcelPackage pack2 = new ExcelPackage(new FileInfo(file));
             pack2.Workbook.Date1904 = true;  // Only the cells must be updated when this change, if set the same nothing must change
             pack2.Save();
-
 
             ExcelPackage pack3 = new ExcelPackage(new FileInfo(file));
             ExcelWorksheet w3 = pack3.Workbook.Worksheets["test"];
@@ -2872,6 +2906,7 @@ namespace EPPlusTest
             Assert.AreEqual(dateTest1, w3.Cells[1, 1].Value);
             Assert.AreEqual(dateTest2, w3.Cells[2, 1].Value);
         }
+
         [TestMethod]
         public void ValueText()
         {
@@ -2882,6 +2917,7 @@ namespace EPPlusTest
 
             var s = ws.Cells[1, 1].Text;
         }
+
         [TestMethod, Ignore]
         public void SaveToStream()
         {
@@ -2891,12 +2927,12 @@ namespace EPPlusTest
             excelPackage.Save();
             var s = stream.ToArray();
         }
+
         [TestMethod, Ignore]
         public void ColumnsTest()
         {
             var excelPackage = new ExcelPackage();
             var ws = excelPackage.Workbook.Worksheets.Add("ColumnTest");
-
 
             for (var c = 4; c <= 20; c += 4)
             {
@@ -3002,7 +3038,8 @@ namespace EPPlusTest
             Assert.AreEqual("Testing comment 2", ws1.Cells[3, 8].Comment.Text);
             Assert.AreEqual("test2", ws1.Cells[3, 8].Comment.Author);
         }
-        #endregion
+
+        #endregion Date1904 Test Cases
 
         [TestMethod]
         public void DateFunctionsWorkWithDifferentCultureDateFormats_US()
@@ -3026,7 +3063,6 @@ namespace EPPlusTest
                     ws.Calculate();
                     usEoMonth = Convert.ToDouble(ws.Cells[2, 3].Value);
                     usEdate = Convert.ToDouble(ws.Cells[3, 3].Value);
-
                 }
             });
             thread.Start();
@@ -3075,6 +3111,7 @@ namespace EPPlusTest
             Thread.CurrentThread.CurrentCulture = currentCulture;
 #endif
         }
+
         [TestMethod]
         public void Text()
         {
@@ -3096,6 +3133,7 @@ namespace EPPlusTest
                 Assert.AreEqual("2018", ws.Cells["A1"].Text);
             }
         }
+
         [TestMethod]
         public void CopySheetWithSharedFormula()
         {
@@ -3113,15 +3151,16 @@ namespace EPPlusTest
                 Assert.AreEqual("SUM(B2:C2)", sheet2.Cells["D2"].Formula);
             }
         }
+
         [TestMethod]
         public void Sort()
-        {            
+        {
             using (var package = OpenPackage("Sort.xlsx", true))
             {
                 var ws = package.Workbook.Worksheets.Add("Sorting");
-                AddSortingData(ws,1,1);
+                AddSortingData(ws, 1, 1);
                 ws.Cells["A:C"].Sort(2, true);
-                ws.Cells["A:C"].Sort(new int[] { 2,1 }, new bool[] { true, false });
+                ws.Cells["A:C"].Sort(new int[] { 2, 1 }, new bool[] { true, false });
 
                 AddSortingData(ws, 1, 5);
                 ws.Cells["H1:H1000"].Formula = "E1*2";
@@ -3136,11 +3175,11 @@ namespace EPPlusTest
                 ws.Cells["I9"].Value = "aa";
                 ws.Cells["I7"].AddComment("Comment", "Jan");
 
-
-                ws.Cells["I:I"].Sort(0,true);
+                ws.Cells["I:I"].Sort(0, true);
                 package.Save();
             }
         }
+
         [TestMethod]
         public void ShowGridlines()
         {
@@ -3154,24 +3193,25 @@ namespace EPPlusTest
                 Assert.IsTrue(ws.View.ShowGridLines);
             }
         }
+
         private static void AddSortingData(ExcelWorksheet ws, int row, int col)
         {
             var rand = new Random();
             var addr = ExcelCellBase.GetAddress(row, col, row + 999, col);
             ws.Cells[addr].Style.Fill.PatternType = ExcelFillStyle.Solid;
             ws.Cells[addr].Style.Font.Color.SetColor(Color.White);
-            for (var r = row; r <= row+999; r++)
+            for (var r = row; r <= row + 999; r++)
             {
                 var v = rand.NextDouble() * row;
                 ws.SetValue(r, col, v);
-                ws.SetValue(r, col+1, $"Rad {r} v={v}");
-                ws.SetValue(r, col+2, $"Rad {r} v={v}");
+                ws.SetValue(r, col + 1, $"Rad {r} v={v}");
+                ws.SetValue(r, col + 2, $"Rad {r} v={v}");
                 ws.Cells[r, col].Style.Fill.BackgroundColor.SetColor(r % 3 == 0 ? Color.Red : r % 3 == 1 ? Color.Green : Color.Blue);
                 if (r % 10 == 0)
                 {
-                    ws.Cells[r, col+1, r, col+2].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    ws.Cells[r, col+1].Style.Fill.BackgroundColor.SetColor(Color.LightPink);
-                    ws.Cells[r, col+2].Style.Fill.BackgroundColor.SetColor(Color.LightCyan);
+                    ws.Cells[r, col + 1, r, col + 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    ws.Cells[r, col + 1].Style.Fill.BackgroundColor.SetColor(Color.LightPink);
+                    ws.Cells[r, col + 2].Style.Fill.BackgroundColor.SetColor(Color.LightCyan);
                 }
             }
         }

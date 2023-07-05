@@ -1,37 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using IronSoftware.Drawing;
+using static IronSoftware.Drawing.AnyBitmap;
 
 namespace OfficeOpenXml.Compatibility
 {
     internal class ImageCompat
     {
-        internal static byte[] GetImageAsByteArray(Image image)
+        internal static byte[] GetImageAsByteArray(AnyBitmap image)
         {
             var ms = new MemoryStream();
-            if (image.RawFormat.Guid == ImageFormat.Gif.Guid)
+            if (image.GetImageFormat() == ImageFormat.Gif)
             {
-                image.Save(ms, ImageFormat.Gif);
+                image.ExportStream(ms, ImageFormat.Gif);
             }
-            else if (image.RawFormat.Guid == ImageFormat.Bmp.Guid)
+            else if (image.GetImageFormat() == ImageFormat.Bmp)
             {
-                image.Save(ms, ImageFormat.Bmp);
+                image.ExportStream(ms, ImageFormat.Bmp);
             }
-            else if (image.RawFormat.Guid == ImageFormat.Png.Guid)
+            else if (image.GetImageFormat() == ImageFormat.Png)
             {
-                image.Save(ms, ImageFormat.Png);
+                image.ExportStream(ms, ImageFormat.Png);
             }
-            else if (image.RawFormat.Guid == ImageFormat.Tiff.Guid)
+            else if (image.GetImageFormat() == ImageFormat.Tiff)
             {
-                image.Save(ms, ImageFormat.Tiff);
+                image.ExportStream(ms, ImageFormat.Tiff);
             }
             else
             {
-                image.Save(ms, ImageFormat.Jpeg);
+                image.ExportStream(ms, ImageFormat.Jpeg);
             }
 
             return ms.ToArray();

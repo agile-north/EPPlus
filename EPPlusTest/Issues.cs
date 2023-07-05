@@ -18,6 +18,8 @@ using System.Dynamic;
 using System.Globalization;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.FormulaParsing;
+using IronSoftware.Drawing;
+using Color = IronSoftware.Drawing.Color;
 
 namespace EPPlusTest
 {
@@ -40,6 +42,7 @@ namespace EPPlusTest
                 Directory.CreateDirectory(@"c:\Temp\bug");
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15052()
         {
@@ -52,6 +55,7 @@ namespace EPPlusTest
 
             p.SaveAs(new FileInfo(@"c:\temp\style.xlsx"));
         }
+
         [TestMethod]
         public void Issue15041()
         {
@@ -64,6 +68,7 @@ namespace EPPlusTest
                 ws.Dispose();
             }
         }
+
         [TestMethod]
         public void Issue15031()
         {
@@ -76,6 +81,7 @@ namespace EPPlusTest
                 ws.Dispose();
             }
         }
+
         [TestMethod]
         public void Issue15022()
         {
@@ -87,6 +93,7 @@ namespace EPPlusTest
                 ws.Cells.AutoFitColumns();
             }
         }
+
         [TestMethod]
         public void Issue15056()
         {
@@ -99,8 +106,8 @@ namespace EPPlusTest
                 s.Cells["A1:A2"].Formula = ""; // or null, or non-empty whitespace, with same result
                 ep.Save();
             }
-
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15058()
@@ -109,6 +116,7 @@ namespace EPPlusTest
             ExcelPackage excelP = new ExcelPackage(newFile);
             ExcelWorksheet ws = excelP.Workbook.Worksheets[1];
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15063()
@@ -118,6 +126,7 @@ namespace EPPlusTest
             ExcelWorksheet ws = excelP.Workbook.Worksheets[1];
             ws.Calculate();
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15112()
@@ -155,6 +164,7 @@ namespace EPPlusTest
                 package.Save();
             }
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15109()
@@ -177,6 +187,7 @@ namespace EPPlusTest
             Assert.AreEqual("A1:AD406", ws.Dimension.Address);
             excelP.Dispose();
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15120()
@@ -188,6 +199,7 @@ namespace EPPlusTest
 
             //p.Save();
         }
+
         [TestMethod]
         public void Issue15113()
         {
@@ -201,6 +213,7 @@ namespace EPPlusTest
             ws.Cells["A1:H1"].Style.Font.Bold = true;
             p.SaveAs(new FileInfo(@"c:\temp\merge.xlsx"));
         }
+
         [TestMethod]
         public void Issue15141()
         {
@@ -214,6 +227,7 @@ namespace EPPlusTest
                 ExcelColumn column = sheet.Column(3); // fails with exception
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15145()
         {
@@ -227,6 +241,7 @@ namespace EPPlusTest
                 p.SaveAs(new System.IO.FileInfo(@"C:\Temp\bug\InsertCopyFail.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15150()
         {
@@ -267,6 +282,7 @@ namespace EPPlusTest
             var dest = ws.Cells[1, column + columns, ws.Dimension.End.Row, ws.Dimension.End.Column + columns];
             source.Copy(dest);
         }
+
 #if !Core
         [TestMethod]
         public void Issue15123()
@@ -306,6 +322,7 @@ namespace EPPlusTest
             }
         }
 #endif
+
         [TestMethod]
         public void Issue15128()
         {
@@ -330,6 +347,7 @@ namespace EPPlusTest
             ws.Cells["A1:A8"].Merge = false;
             p.Dispose();
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15158()
@@ -360,6 +378,7 @@ namespace EPPlusTest
         {
             public string prop2 { get; set; }
         }
+
         [TestMethod]
         public void LoadFromColIssue()
         {
@@ -388,6 +407,7 @@ namespace EPPlusTest
                 Assert.AreEqual("A1", ws.Cells[1, 1].Value);
             }
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15159()
@@ -400,6 +420,7 @@ namespace EPPlusTest
             fs.Seek(0, SeekOrigin.Begin);
             var fs2 = fs;
         }
+
         [TestMethod]
         public void Issue15179()
         {
@@ -411,9 +432,9 @@ namespace EPPlusTest
                 ws.DeleteRow(2, 6);
                 ws.Cells["A1"].Value = 0;
                 var s = ws.Cells["A1"].Value.ToString();
-
             }
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15169()
@@ -432,6 +453,7 @@ namespace EPPlusTest
                 excelPackage.SaveAs(new FileInfo(@"C:\temp\bug\issue\output2.xlsx"));
             }
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15172()
@@ -447,6 +469,7 @@ namespace EPPlusTest
                 Assert.AreEqual(0D, ws.Cells["X10"].Value);
             }
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15174()
@@ -458,6 +481,7 @@ namespace EPPlusTest
                 package.SaveAs(new FileInfo(@"C:\temp\bug\MyTemplate2.xlsx"));
             }
         }
+
         [Ignore]
         [TestMethod]
         public void PictureIssue()
@@ -505,7 +529,6 @@ namespace EPPlusTest
                 Assert.AreEqual(13.445419, Math.Round((double)f7Val, 6));
                 sw.Stop();
                 Console.WriteLine(sw.Elapsed.TotalSeconds); // approx. 10 seconds
-
             }
         }
 
@@ -524,9 +547,9 @@ namespace EPPlusTest
                 Assert.AreEqual("20K2E01", ws.Cells["F5"].Value);
                 sw.Stop();
                 Console.WriteLine(sw.Elapsed.TotalSeconds); // approx. 10 seconds
-
             }
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15154()
@@ -542,8 +565,8 @@ namespace EPPlusTest
                 }
                 //}
             });
-
         }
+
         [Ignore]
         [TestMethod]
         public void Issue15188()
@@ -561,6 +584,7 @@ namespace EPPlusTest
                 Assert.AreEqual(DateTime.Today.ToString("MM/dd/yyyy"), a);
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15194()
         {
@@ -576,6 +600,7 @@ namespace EPPlusTest
                 package.Save();
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15195()
         {
@@ -589,6 +614,7 @@ namespace EPPlusTest
                 package.Save();
             }
         }
+
         [TestMethod, Ignore]
         public void Issue14788()
         {
@@ -602,6 +628,7 @@ namespace EPPlusTest
                 package.Save();
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15167()
         {
@@ -619,6 +646,7 @@ namespace EPPlusTest
                 excelPackage.SaveAs(new FileInfo(@"c:\temp\bug\output.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15198()
         {
@@ -632,6 +660,7 @@ namespace EPPlusTest
                 package.Save();
             }
         }
+
         [TestMethod, Ignore]
         public void Issue13492()
         {
@@ -645,12 +674,14 @@ namespace EPPlusTest
                 package.Save();
             }
         }
+
         [TestMethod, Ignore]
         public void Issue14966()
         {
             using (var package = new ExcelPackage(new FileInfo(@"c:\temp\bug\ssis\FileFromReportingServer2012.xlsx")))
                 package.SaveAs(new FileInfo(@"c:\temp\bug\ssis\Corrupted.xlsx"));
         }
+
         [TestMethod, Ignore]
         public void Issue15200()
         {
@@ -675,6 +706,7 @@ namespace EPPlusTest
                 p.Save();
             }
         }
+
         [TestMethod]
         public void Issue15212()
         {
@@ -687,6 +719,7 @@ namespace EPPlusTest
                 var t = ws.Cells["A1"].Text;
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15213()
         {
@@ -708,7 +741,6 @@ namespace EPPlusTest
         [TestMethod, Ignore]
         public void Issuer15217()
         {
-
             using (var p = new ExcelPackage(new FileInfo(@"c:\temp\bug\FormatRowCol.xlsx")))
             {
                 var ws = p.Workbook.Worksheets.Add("fmt");
@@ -720,6 +752,7 @@ namespace EPPlusTest
                 p.Save();
             }
         }
+
         [TestMethod, Ignore]
         public void Issuer15228()
         {
@@ -753,8 +786,8 @@ namespace EPPlusTest
                 p.Save();
             }
         }
+
         [TestMethod]
-        /**** Pivottable issue ****/
         public void Issue()
         {
             DirectoryInfo outputDir = new DirectoryInfo(@"c:\ExcelPivotTest");
@@ -835,11 +868,11 @@ namespace EPPlusTest
                 EP.Save();
             }
         }
+
         private void BuildPivotTable1(FileInfo MyFile)
         {
             using (ExcelPackage ep = new ExcelPackage(MyFile))
             {
-
                 var wsData = ep.Workbook.Worksheets["Data"];
                 var totalRows = wsData.Dimension.Address;
                 ExcelRange data = wsData.Cells[totalRows];
@@ -850,7 +883,6 @@ namespace EPPlusTest
                 pivotTable1.ColumnGrandTotals = true;
                 var rowField = pivotTable1.RowFields.Add(pivotTable1.Fields["INVOICE_DATE"]);
 
-
                 rowField.AddDateGrouping(eDateGroupBy.Years);
                 var yearField = pivotTable1.Fields.GetDateGroupField(eDateGroupBy.Years);
                 yearField.Name = "Year";
@@ -861,7 +893,6 @@ namespace EPPlusTest
                 TotalSpend.Name = "Total Spend";
                 TotalSpend.Format = "$##,##0";
 
-
                 var CountInvoicePrice = pivotTable1.DataFields.Add(pivotTable1.Fields["COUNT"]);
                 CountInvoicePrice.Name = "Total Lines";
                 CountInvoicePrice.Format = "##,##0";
@@ -869,16 +900,13 @@ namespace EPPlusTest
                 pivotTable1.DataOnRows = false;
                 ep.Save();
                 ep.Dispose();
-
             }
-
         }
 
         private void BuildPivotTable2(FileInfo MyFile)
         {
             using (ExcelPackage ep = new ExcelPackage(MyFile))
             {
-
                 var wsData = ep.Workbook.Worksheets["Data"];
                 var totalRows = wsData.Dimension.Address;
                 ExcelRange data = wsData.Cells[totalRows];
@@ -889,7 +917,6 @@ namespace EPPlusTest
                 pivotTable1.ColumnGrandTotals = true;
                 var rowField = pivotTable1.RowFields.Add(pivotTable1.Fields["INVOICE_DATE"]);
 
-
                 rowField.AddDateGrouping(eDateGroupBy.Years);
                 var yearField = pivotTable1.Fields.GetDateGroupField(eDateGroupBy.Years);
                 yearField.Name = "Year";
@@ -900,7 +927,6 @@ namespace EPPlusTest
                 TotalSpend.Name = "Total Spend";
                 TotalSpend.Format = "$##,##0";
 
-
                 var CountInvoicePrice = pivotTable1.DataFields.Add(pivotTable1.Fields["COUNT"]);
                 CountInvoicePrice.Name = "Total Lines";
                 CountInvoicePrice.Format = "##,##0";
@@ -908,9 +934,7 @@ namespace EPPlusTest
                 pivotTable1.DataOnRows = false;
                 ep.Save();
                 ep.Dispose();
-
             }
-
         }
 
         [TestMethod, Ignore]
@@ -922,6 +946,7 @@ namespace EPPlusTest
                 exfile.SaveAs(new FileInfo(@"c:\temp\bug\Boldtextcopy2.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void issue15300()
         {
@@ -930,8 +955,8 @@ namespace EPPlusTest
                 exfile.Workbook.Worksheets.Copy("sheet1", "copiedSheet");
                 exfile.SaveAs(new FileInfo(@"c:\temp\bug\headfootpic_save.xlsx"));
             }
-
         }
+
         [TestMethod, Ignore]
         public void issue15295()
         {
@@ -939,8 +964,8 @@ namespace EPPlusTest
             {
                 exfile.SaveAs(new FileInfo(@"C:\temp\bug\pivot issue\pivotcoldup.xlsx"));
             }
-
         }
+
         [TestMethod, Ignore]
         public void issue15282()
         {
@@ -948,7 +973,6 @@ namespace EPPlusTest
             {
                 exfile.SaveAs(new FileInfo(@"C:\temp\bug\pivot issue\pivottab-tab-save.xlsx"));
             }
-
         }
 
         [TestMethod, Ignore]
@@ -967,8 +991,8 @@ namespace EPPlusTest
             }
             wksheet.View.FreezePanes(3, 3);
             pkg.Save();
-
         }
+
         [TestMethod, Ignore]
         public void Issue15382()
         {
@@ -977,6 +1001,7 @@ namespace EPPlusTest
                 exfile.SaveAs(new FileInfo(@"C:\temp\bug\inlinText.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15380()
         {
@@ -986,6 +1011,7 @@ namespace EPPlusTest
                 Assert.AreEqual(v, 1);
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15378()
         {
@@ -995,6 +1021,7 @@ namespace EPPlusTest
                 var cs = c.Series[0] as ExcelBubbleChartSerie;
             }
         }
+
         [TestMethod]
         public void Issue15377()
         {
@@ -1005,6 +1032,7 @@ namespace EPPlusTest
                 var v = ws.GetValue<double?>(1, 1);
             }
         }
+
         [TestMethod]
         public void Issue15374()
         {
@@ -1017,6 +1045,7 @@ namespace EPPlusTest
                 p.SaveAs(new FileInfo(@"c:\temp\rt.xlsx"));
             }
         }
+
         [TestMethod]
         public void IssueTranslate()
         {
@@ -1029,6 +1058,7 @@ namespace EPPlusTest
                 Assert.AreEqual("IF(1=1,\"A's B C\",\"D\")", ws.Cells["A2"].Formula);
             }
         }
+
         [TestMethod]
         public void Issue15397()
         {
@@ -1041,7 +1071,7 @@ namespace EPPlusTest
                 workSheet.Cells["A:A,C:C"].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                 workSheet.Cells["A:A,C:C"].Style.Fill.BackgroundColor.SetColor(Color.Red);
 
-                //And then: 
+                //And then:
 
                 workSheet.Cells["A:H"].Style.Font.Color.SetColor(Color.Blue);
 
@@ -1057,6 +1087,7 @@ namespace EPPlusTest
                 p.SaveAs(new FileInfo(@"c:\temp\styleerror.xlsx"));
             }
         }
+
         [TestMethod]
         public void Issuer14801()
         {
@@ -1073,6 +1104,7 @@ namespace EPPlusTest
                 p.SaveAs(new FileInfo(@"c:\temp\rtpreserve.xlsx"));
             }
         }
+
         [TestMethod]
         public void Issuer15445()
         {
@@ -1085,6 +1117,7 @@ namespace EPPlusTest
                 p.SaveAs(new FileInfo(@"c:\temp\activeCell.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15429()
         {
@@ -1109,6 +1142,7 @@ namespace EPPlusTest
                 excelPackage.SaveAs(new FileInfo(@"c:\temp\error.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15436()
         {
@@ -1118,6 +1152,7 @@ namespace EPPlusTest
                 Assert.AreEqual(excelPackage.Workbook.Worksheets[1].Cells["A1"].Value, 19120072);
             }
         }
+
         [TestMethod, Ignore]
         public void Issue13128()
         {
@@ -1127,6 +1162,7 @@ namespace EPPlusTest
                 Assert.AreNotEqual(((ExcelChart)excelPackage.Workbook.Worksheets[1].Drawings[0]).Series[0].XSeries, null);
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15252()
         {
@@ -1156,6 +1192,7 @@ namespace EPPlusTest
                 }
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15469()
         {
@@ -1165,6 +1202,7 @@ namespace EPPlusTest
                 excelPackage.SaveAs(fs);
             }
         }
+
         [TestMethod]
         public void Issue15438()
         {
@@ -1176,6 +1214,7 @@ namespace EPPlusTest
                 Assert.AreEqual(c.LookupColor(c), "#FF00FF00");
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15097()
         {
@@ -1191,6 +1230,7 @@ namespace EPPlusTest
                 }
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15485()
         {
@@ -1202,6 +1242,7 @@ namespace EPPlusTest
                 pkg.Save();
             }
         }
+
         public static byte[] ReadTemplateFile(string templateName)
         {
             byte[] templateFIle;
@@ -1220,7 +1261,6 @@ namespace EPPlusTest
                 templateFIle = ms.ToArray();
             }
             return templateFIle;
-
         }
 
         [TestMethod]
@@ -1228,7 +1268,6 @@ namespace EPPlusTest
         {
             using (var pck = new ExcelPackage())
             {
-
                 var sheet1 = pck.Workbook.Worksheets.Add("sheet1");
                 var sheet2 = pck.Workbook.Worksheets.Add("Sheet2");
                 sheet1.Cells["C2"].Value = 3;
@@ -1323,6 +1362,7 @@ namespace EPPlusTest
                     file.Delete();
             }
         }
+
         [TestMethod, Ignore]
         public void MergeIssue()
         {
@@ -1337,6 +1377,7 @@ namespace EPPlusTest
                 pckg.Save();
             }
         }
+
         [TestMethod, Ignore]
         public void Issuer15563()   //And 15562
         {
@@ -1353,6 +1394,7 @@ namespace EPPlusTest
                 package.SaveAs(new FileInfo(@"c:\temp\bug\stylebug.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issuer15560()
         {
@@ -1362,6 +1404,7 @@ namespace EPPlusTest
                 package.SaveAs(new FileInfo(@"c:\temp\bug\sharedformulabug.xlsm"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issuer15558()
         {
@@ -1371,6 +1414,7 @@ namespace EPPlusTest
                 package.SaveAs(new FileInfo(@"c:\temp\bug\saveproblem.xlsm"));
             }
         }
+
         /// <summary>
         /// Issue 15561
         /// </summary>
@@ -1408,6 +1452,7 @@ namespace EPPlusTest
                 pck.Save();
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15566()
         {
@@ -1418,6 +1463,7 @@ namespace EPPlusTest
                 excelpackage.SaveAs(new FileInfo(ExportFileName));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15564()
         {
@@ -1434,6 +1480,7 @@ namespace EPPlusTest
                 p.SaveAs(new FileInfo(@"c:\temp\bug\fb.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue15551()    //Works fine?
         {
@@ -1448,10 +1495,10 @@ namespace EPPlusTest
                 p.SaveAs(new FileInfo(@"c:\temp\bug\StyleBug.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void BugCommentNullAfterRemove()
         {
-
             string xls = @"c:\temp\bug\in.xlsx";
 
             ExcelPackage theExcel = new ExcelPackage(new FileInfo(xls), true);
@@ -1468,13 +1515,11 @@ namespace EPPlusTest
                 Assert.IsNotNull(cmnt, "Comment in " + addr + " expected not null ");
                 ws.Comments.Remove(cmnt);
             }
-
         }
 
         [TestMethod, Ignore]
         public void BugCommentExceptionOnRemove()
         {
-
             string xls = @"c:\temp\bug\in.xlsx";
 
             ExcelPackage theExcel = new ExcelPackage(new FileInfo(xls), true);
@@ -1497,7 +1542,6 @@ namespace EPPlusTest
                     Assert.Fail("Exception while removing comment at " + addr + ": " + ex.Message);
                 }
             }
-
         }
 
         [TestMethod]
@@ -1525,6 +1569,7 @@ namespace EPPlusTest
                 Assert.AreEqual(1, result, string.Format("Expected 1, got {0}", result));
             }
         }
+
         [TestMethod]
         public void Issue15548_SumIfsShouldHandleBadData()
         {
@@ -1550,6 +1595,7 @@ namespace EPPlusTest
                 Assert.AreEqual(1, result, string.Format("Expected 1, got {0}", result));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue_15585()
         {
@@ -1572,6 +1618,7 @@ namespace EPPlusTest
                 package.Workbook.FormulaParserManager.DetachLogger();
             }
         }
+
         [TestMethod]
         public void Issue_15641()
         {
@@ -1585,6 +1632,7 @@ namespace EPPlusTest
 
             Assert.AreEqual(true, sheet.Cells[3, 1].IsArrayFormula);
         }
+
         [TestMethod, Ignore]
         public void Issue_5()
         {
@@ -1596,6 +1644,7 @@ namespace EPPlusTest
                 package.SaveAs(new FileInfo(@"c:\temp\bug\vbafailSaved.xlsm"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue_8()
         {
@@ -1610,9 +1659,8 @@ namespace EPPlusTest
                 ws.Cells["a1"].LoadFromCollection(l);
                 package.SaveAs(new FileInfo(@"c:\temp\dynamic.xlsx"));
             }
-
-
         }
+
         [TestMethod, Ignore]
         public void Issuer27()
         {
@@ -1634,6 +1682,7 @@ namespace EPPlusTest
             ws.Column(5).Hidden = true; // span exception
             pck.Save();
         }
+
         [TestMethod, Ignore]
         public void Issuer26()
         {
@@ -1644,6 +1693,7 @@ namespace EPPlusTest
             ws.PrinterSettings.RepeatColumns = new ExcelAddress("A:A");
             pck.Save();
         }
+
         [TestMethod, Ignore]
         public void Issue32()
         {
@@ -1679,9 +1729,9 @@ namespace EPPlusTest
                 package.Save();
 
                 //}
-
             }
         }
+
         [TestMethod]
         public void Issue63() // See https://github.com/JanKallman/EPPlus/issues/63
         {
@@ -1712,6 +1762,7 @@ namespace EPPlusTest
                 File.Delete(newFile.FullName);
             }
         }
+
         [TestMethod, Ignore]
         public void Issue60()
         {
@@ -1721,6 +1772,7 @@ namespace EPPlusTest
                 p.Load(ms, "");
             }
         }
+
         [TestMethod]
         public void Issue61()
         {
@@ -1733,7 +1785,6 @@ namespace EPPlusTest
                 ws.Cells["A1"].LoadFromDataTable(table1, true);
                 //p.SaveAs(new FileInfo(@"c:\temp\issue61.xlsx"));
             }
-
         }
 
         [TestMethod, Ignore]
@@ -1760,6 +1811,7 @@ namespace EPPlusTest
             package.Save();
             package.Dispose();
         }
+
         [TestMethod]
         public void Issue57()
         {
@@ -1767,6 +1819,7 @@ namespace EPPlusTest
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("test");
             ws.Cells["A1"].LoadFromArrays(Enumerable.Empty<object[]>());
         }
+
         [TestMethod, Ignore]
         public void Issue55()
         {
@@ -1774,6 +1827,7 @@ namespace EPPlusTest
             ExcelWorksheet ws = pck.Workbook.Worksheets[1];
             Console.WriteLine(ws.Cells["A1"].Text);
         }
+
         [TestMethod, Ignore]
         public void Issue51()
         {
@@ -1800,9 +1854,12 @@ namespace EPPlusTest
                 pck.Save();
             }
         }
+
         #region Issue 44
+
         private static string PIVOT_WS_NAME = "Pivot";
         private static string DATA_WS_NAME = "Data";
+
         [TestMethod, Ignore]
         public void Issue44()
         {
@@ -1816,8 +1873,8 @@ namespace EPPlusTest
                 xlp.SaveAs(fs);
                 fs.Close();
             }
-
         }
+
         private void PrepareDoc(ExcelPackage xlp)
         {
             //generate date/value pairs for October 2017
@@ -1849,11 +1906,12 @@ namespace EPPlusTest
             ExcelPivotTableField dt = piv.RowFields.Add(piv.Fields["Date"]);
             dt.AddDateGrouping(eDateGroupBy.Days | eDateGroupBy.Months);
         }
-        #endregion
+
+        #endregion Issue 44
+
         [TestMethod]
         public void Issue66()
         {
-
             using (var pck = new ExcelPackage())
             {
                 var ws = pck.Workbook.Worksheets.Add("Test!");
@@ -1866,10 +1924,10 @@ namespace EPPlusTest
                 using (var pck2 = new ExcelPackage(pck.Stream))
                 {
                     ws = pck2.Workbook.Worksheets["Test!"];
-
                 }
             }
         }
+
         [TestMethod, Ignore]
         public void Issue68()
         {
@@ -1881,6 +1939,7 @@ namespace EPPlusTest
                 pck.SaveAs(new FileInfo(@"c:\temp\bug68-2.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue70()
         {
@@ -1905,13 +1964,14 @@ namespace EPPlusTest
             {
                 ExcelWorkbook wb = package.Workbook;
                 ExcelWorksheet sh = wb.Worksheets[1];
-                System.Drawing.Image img_ = System.Drawing.Image.FromFile(@"C:\temp\img\background.gif");
+                AnyBitmap img_ = AnyBitmap.FromFile(@"C:\temp\img\background.gif");
                 ExcelPicture pic = sh.Drawings.AddPicture("logo", img_);
                 pic.SetPosition(1, 1);
 
                 package.SaveAs(outputFile);
             }
         }
+
         [TestMethod, Ignore]
         public void Issue99()
         {
@@ -1928,6 +1988,7 @@ namespace EPPlusTest
                 }
             }
         }
+
         [TestMethod, Ignore]
         public void Issue94()
         {
@@ -1939,6 +2000,7 @@ namespace EPPlusTest
                 package.SaveAs(new FileInfo(@"c:\temp\bug\iss94\MergedCellsTemplateSaved.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue107()
         {
@@ -1956,6 +2018,7 @@ namespace EPPlusTest
                 epIN.SaveAs(new FileInfo(@"C:\temp\bug\pivotbug107-SameWB.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue127()
         {
@@ -1965,6 +2028,7 @@ namespace EPPlusTest
                 p.SaveAs(new FileInfo(@"C:\temp\bug\PivotTableTestCaseSaved.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue167()
         {
@@ -1974,6 +2038,7 @@ namespace EPPlusTest
                 p.SaveAs(new FileInfo(@"C:\temp\bug\test-ErrorworkbookSaved.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue155()
         {
@@ -1988,6 +2053,7 @@ namespace EPPlusTest
                 File.WriteAllBytes(path, data);
             }
         }
+
         [TestMethod, Ignore]
         public void Issue173()
         {
@@ -1997,6 +2063,7 @@ namespace EPPlusTest
                 var r = ws.Cells["A4"].Text;
             }
         }
+
         [TestMethod, Ignore]
         public void Issue176()
         {
@@ -2022,6 +2089,7 @@ namespace EPPlusTest
                 Assert.AreEqual(sheet.Cells["C2"].Value, null);
             }
         }
+
         [TestMethod, Ignore]
         public void Issue181()
         {
@@ -2032,6 +2100,7 @@ namespace EPPlusTest
                 pck.SaveAs(new FileInfo($@"C:\temp\bug\issue181-saved.xlsx"));
             }
         }
+
         [TestMethod, Ignore]
         public void Issue10()
         {
@@ -2046,7 +2115,7 @@ namespace EPPlusTest
                 int row = 1;
                 foreach (var f in Directory.EnumerateFiles(@"c:\temp\addin_temp\Addin\img\open_icon_library-full\icons\ico\16x16\actions\"))
                 {
-                    var b = new Bitmap(f);
+                    var b = new AnyBitmap(f);
                     var pic = ws.Drawings.AddPicture($"Image{(row + 1) / 2}", b);
                     pic.SetPosition(row, 0, 0, 0);
                     row += 2;
@@ -2054,11 +2123,12 @@ namespace EPPlusTest
                 pck.Save();
             }
         }
+
         /// <summary>
-        /// Creating a new ExcelPackage with an external stream should not dispose of 
+        /// Creating a new ExcelPackage with an external stream should not dispose of
         /// that external stream. That is the responsibility of the caller.
         /// Note: This test would pass with EPPlus 4.1.1. In 4.5.1 the line CloseStream() was added
-        /// to the ExcelPackage.Dispose() method. That line is redundant with the line before, 
+        /// to the ExcelPackage.Dispose() method. That line is redundant with the line before,
         /// _stream.Close() except that _stream.Close() is only called if the _stream is NOT
         /// an External Stream (and several other conditions).
         /// Note that CloseStream() doesn't do anything different than _stream.Close().
@@ -2080,6 +2150,7 @@ namespace EPPlusTest
             // Assert
             Assert.IsTrue(stream.Length > 0);
         }
+
         [TestMethod]
         public void Issue204()
         {
@@ -2100,6 +2171,7 @@ namespace EPPlusTest
                 Assert.AreEqual(formula.ToUpper(), cell.FormulaR1C1.ToUpper());
             }
         }
+
         [TestMethod]
         public void Issue170()
         {
@@ -2113,6 +2185,7 @@ namespace EPPlusTest
             SaveWorksheet("print_titles_170-Saved.xlsx");
             _pck.Dispose();
         }
+
         [TestMethod]
         public void Issue172()
         {
@@ -2136,6 +2209,7 @@ namespace EPPlusTest
 
             _pck.Dispose();
         }
+
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Issue234()
@@ -2162,8 +2236,8 @@ namespace EPPlusTest
             Assert.AreEqual(a2.WorkSheet, "Deal's History");
             _pck.Save();
             _pck.Dispose();
-
         }
+
         [ExpectedException(typeof(ArgumentException))]
         [TestMethod]
         public void Issue233()
@@ -2175,7 +2249,7 @@ namespace EPPlusTest
 
             var sheetName = "Summary_GLEDHOWSUGARCO![]()PTY";
 
-            //Create the worksheet 
+            //Create the worksheet
             var sheet = _pck.Workbook.Worksheets.Add(sheetName);
 
             //Read the data into a range
@@ -2190,6 +2264,7 @@ namespace EPPlusTest
             _pck.Save();
             _pck.Dispose();
         }
+
         public class Car
         {
             public int Id { get; set; }
@@ -2223,6 +2298,7 @@ namespace EPPlusTest
             };
             }
         }
+
         [TestMethod]
         public void Issue236()
         {
@@ -2230,6 +2306,7 @@ namespace EPPlusTest
             _pck.Workbook.Worksheets["Sheet1"].Cells[7, 10].AddComment("test", "Author");
             SaveWorksheet("Issue236-Saved.xlsx");
         }
+
         [TestMethod]
         public void Issue228()
         {
@@ -2240,6 +2317,7 @@ namespace EPPlusTest
             ws.Cells.AutoFitColumns();
             SaveWorksheet("Font55-Saved.xlsx");
         }
+
         [TestMethod]
         public void Issue241()
         {
@@ -2249,6 +2327,7 @@ namespace EPPlusTest
             _pck.Save();
             _pck.Dispose();
         }
+
         [TestMethod]
         public void Issue195()
         {
@@ -2270,6 +2349,7 @@ namespace EPPlusTest
 
             pkg.SaveAs(new FileInfo(@"c:\temp\n.xlsx"));
         }
+
         [TestMethod]
         public void Issue332()
         {
@@ -2279,6 +2359,7 @@ namespace EPPlusTest
             ws.Cells["A1"].Hyperlink = new ExcelHyperLink("A2", "A2");
             pkg.Save();
         }
+
         [TestMethod]
         public void Issue332_2()
         {
@@ -2287,6 +2368,7 @@ namespace EPPlusTest
             var ws = pkg.Workbook.Worksheets["Hyperlink"];
             Assert.IsNotNull(ws.Cells["A1"].Hyperlink);
         }
+
         [TestMethod]
         public void Issuer246()
         {
@@ -2305,6 +2387,7 @@ namespace EPPlusTest
             Assert.AreEqual(ws.GetValue<DateTime>(1, 1), new DateTime(2018, 12, 31));
             System.Threading.Thread.CurrentThread.CurrentCulture = pCulture;
         }
+
         [TestMethod]
         public void Issue347()
         {
@@ -2313,6 +2396,7 @@ namespace EPPlusTest
             //package.Workbook.Worksheets.Add("NewWs", templateWS);
             package.Workbook.Worksheets.Delete(templateWS);
         }
+
         [TestMethod]
         public void Issue348()
         {
@@ -2359,6 +2443,7 @@ namespace EPPlusTest
                 Assert.AreEqual(0d, sheet.Cells["B16"].Value);
             }
         }
+
         [TestMethod]
         public void Issue345()
         {
@@ -2371,10 +2456,10 @@ namespace EPPlusTest
                 package.Save();
             }
         }
+
         [TestMethod]
         public void Issue387()
         {
-
             using (ExcelPackage package = OpenTemplatePackage("issue345.xlsx"))
             {
                 var workbook = package.Workbook;
@@ -2387,6 +2472,7 @@ namespace EPPlusTest
                 workbook.Names.Add("Q0", cells);
             }
         }
+
         [TestMethod]
         public void Issue333()
         {
@@ -2399,6 +2485,7 @@ namespace EPPlusTest
                 Assert.AreEqual("2019-03-07", ws.Cells["A1"].Text);
             }
         }
+
         [TestMethod]
         public void Issue445()
         {
@@ -2407,15 +2494,17 @@ namespace EPPlusTest
             ws.Cells[1, 1].Value = new string('a', 50000);
             ws.Cells[1, 1].AutoFitColumns();
         }
+
         [TestMethod]
         public void Issue460()
         {
             var p = OpenTemplatePackage("Issue460.xlsx");
             var ws = p.Workbook.Worksheets[0];
-            var newWs=p.Workbook.Worksheets.Add("NewSheet");
+            var newWs = p.Workbook.Worksheets.Add("NewSheet");
             ws.Cells.Copy(newWs.Cells);
             SaveWorksheet("Issue460_saved.xlsx");
         }
+
         [TestMethod]
         public void Issue476()
         {

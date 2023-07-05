@@ -1,34 +1,35 @@
 ﻿/*******************************************************************************
  * You may amend and distribute as you like, but don't remove this header!
- * 
+ *
  * All rights reserved.
- * 
- * EPPlus is an Open Source project provided under the 
- * GNU General Public License (GPL) as published by the 
+ *
+ * EPPlus is an Open Source project provided under the
+ * GNU General Public License (GPL) as published by the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * EPPlus provides server-side generation of Excel 2007 spreadsheets.
  * See https://github.com/JanKallman/EPPlus for details.
  *
  *
- * 
+ *
  * The GNU General Public License can be viewed at http://www.opensource.org/licenses/gpl-license.php
  * If you unfamiliar with this license or have questions about it, here is an http://www.gnu.org/licenses/gpl-faq.html
- * 
- * The code for this project may be used and redistributed by any means PROVIDING it is 
- * not sold for profit without the author's written consent, and providing that this notice 
+ *
+ * The code for this project may be used and redistributed by any means PROVIDING it is
+ * not sold for profit without the author's written consent, and providing that this notice
  * and the author's name and all copyright notices remain intact.
- * 
- * All code and executables are provided "as is" with no warranty either express or implied. 
+ *
+ * All code and executables are provided "as is" with no warranty either express or implied.
  * The author accepts no liability for any damage or loss of business that this product may cause.
  *
  *
  * Code change notes:
- * 
+ *
  * Author							Change						Date
  *******************************************************************************
  * Jan Källman		Added		25-JAN-2010
  *******************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,16 +39,21 @@ using System.Drawing;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Drawing.Chart;
-using System.Drawing.Imaging;
+using IronSoftware.Drawing;
 using OfficeOpenXml.Style;
 using OfficeOpenXml.Style.XmlAccess;
 using OfficeOpenXml.Table;
+
+using IronSoftware.Drawing;
+
+using Color = IronSoftware.Drawing.Color;
+
 namespace EPPlusSamples
 {
     /// <summary>
     /// Sample 6 - Reads the filesystem and makes a report.
-    /// </summary>                  
-    class Sample6
+    /// </summary>
+    internal class Sample6
     {
         public class StatItem : IComparable<StatItem>
         {
@@ -55,7 +61,7 @@ namespace EPPlusSamples
             public int Count { get; set; }
             public long Size { get; set; }
 
-#region IComparable<StatItem> Members
+            #region IComparable<StatItem> Members
 
             //Default compare Size
             public int CompareTo(StatItem other)
@@ -64,12 +70,14 @@ namespace EPPlusSamples
                             (Size > other.Size ? 1 : 0);
             }
 
-#endregion
+            #endregion IComparable<StatItem> Members
         }
-        static int _maxLevels;
 
-        static Dictionary<string, StatItem> _extStat = new Dictionary<string, StatItem>();
-        static List<StatItem> _fileSize = new List<StatItem>();
+        private static int _maxLevels;
+
+        private static Dictionary<string, StatItem> _extStat = new Dictionary<string, StatItem>();
+        private static List<StatItem> _fileSize = new List<StatItem>();
+
         /// <summary>
         /// Sample 6 - Reads the filesystem and makes a report.
         /// </summary>
@@ -82,7 +90,7 @@ namespace EPPlusSamples
             _maxLevels = depth;
 
             FileInfo newFile = Utils.GetFileInfo("sample6.xlsx");
-            
+
             //Create the workbook
             ExcelPackage pck = new ExcelPackage(newFile);
             //Add the Content sheet
@@ -95,14 +103,14 @@ namespace EPPlusSamples
             ws.Column(3).Width = 16;
             ws.Column(4).Width = 20;
             ws.Column(5).Width = 20;
-            
+
             //This set the outline for column 4 and 5 and hide them
             ws.Column(4).OutlineLevel = 1;
             ws.Column(4).Collapsed = true;
             ws.Column(5).OutlineLevel = 1;
             ws.Column(5).Collapsed = true;
             ws.OutLineSummaryRight = true;
-            
+
             //Headers
             ws.Cells["B1"].Value = "Name";
             ws.Cells["C1"].Value = "Size";
@@ -110,9 +118,9 @@ namespace EPPlusSamples
             ws.Cells["E1"].Value = "Last modified";
             ws.Cells["B1:E1"].Style.Font.Bold = true;
 
-            ws.View.FreezePanes(2,1);
+            ws.View.FreezePanes(2, 1);
             ws.Select("A2");
-            //height is 20 pixels 
+            //height is 20 pixels
             double height = 20 * 0.75;
             //Start at row 2;
             int row = 2;
@@ -143,14 +151,14 @@ namespace EPPlusSamples
             shape.Border.LineCap = eLineCap.Round;
             shape.TextAnchoring = eTextAnchoringType.Top;
             shape.TextVertical = eTextVerticalType.Horizontal;
-            shape.TextAnchoringControl=false;
+            shape.TextAnchoringControl = false;
             ws.Calculate();
-            ws.Cells[1,2,row,5].AutoFitColumns();
+            ws.Cells[1, 2, row, 5].AutoFitColumns();
 
             //Add the graph sheet
             AddGraphs(pck, row, dir.FullName);
 
-            //Add a HyperLink to the statistics sheet. 
+            //Add a HyperLink to the statistics sheet.
             var namedStyle = pck.Workbook.Styles.CreateNamedStyle("HyperLink");   //This one is language dependent
             namedStyle.Style.Font.UnderLine = true;
             namedStyle.Style.Font.Color.SetColor(Color.Blue);
@@ -170,6 +178,7 @@ namespace EPPlusSamples
 
             return newFile.FullName;
         }
+
         /// <summary>
         /// This method adds the comment to the header row
         /// </summary>
@@ -182,9 +191,9 @@ namespace EPPlusSamples
             var rt = comment.RichText.Add("This column contains the extensions.");
             rt.Bold = false;
             comment.AutoFit = true;
-            
+
             //Add a comment using the Comment collection
-            comment = ws.Comments.Add(ws.Cells["B3"],"This column contains the size of the files.", "JK");
+            comment = ws.Comments.Add(ws.Cells["B3"], "This column contains the size of the files.", "JK");
             //This sets the size and position. (The position is only when the comment is visible)
             comment.From.Column = 7;
             comment.From.Row = 3;
@@ -210,6 +219,7 @@ namespace EPPlusSamples
             rc = comment.RichText.Add(";");
             rc.Color = Color.Black;
         }
+
         /// <summary>
         /// Add the second sheet containg the graphs
         /// </summary>
@@ -226,24 +236,24 @@ namespace EPPlusSamples
             using (ExcelRange r = ws.Cells["A1:O1"])
             {
                 r.Merge = true;
-                r.Style.Font.SetFromFont(new Font("Arial", 22, FontStyle.Regular));
+                r.Style.Font.SetFromFont(new Font("Arial", FontStyle.Regular, 22));
                 r.Style.Font.Color.SetColor(Color.White);
                 r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
                 r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                 r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
             }
-            
+
             //Use the RichText property to change the font for the directory part of the cell
             var rtDir = ws.Cells["A1"].RichText.Add(dir);
             rtDir.FontName = "Consolas";
-            rtDir.Size=18;
+            rtDir.Size = 18;
 
-            //Start with the Extention Size 
-            List<StatItem> lst = new List<StatItem>(_extStat.Values);           
+            //Start with the Extention Size
+            List<StatItem> lst = new List<StatItem>(_extStat.Values);
             lst.Sort();
 
             //Add rows
-            int row=AddStatRows(ws, lst, 2, "Extensions", "Size");
+            int row = AddStatRows(ws, lst, 2, "Extensions", "Size");
 
             //Add commets to the Extensions header
             AddComments(ws);
@@ -253,7 +263,7 @@ namespace EPPlusSamples
             //Set top left corner to row 1 column 2
             pieChart.SetPosition(1, 0, 2, 0);
             pieChart.SetSize(400, 400);
-            pieChart.Series.Add(ExcelRange.GetAddress(3, 2, row-1, 2), ExcelRange.GetAddress(3, 1, row-1, 1));
+            pieChart.Series.Add(ExcelRange.GetAddress(3, 2, row - 1, 2), ExcelRange.GetAddress(3, 1, row - 1, 1));
 
             pieChart.Title.Text = "Extension Size";
             //Set datalabels and remove the legend
@@ -263,8 +273,8 @@ namespace EPPlusSamples
             pieChart.Legend.Remove();
 
             //Resort on Count and add the rows
-            lst.Sort((first,second) => first.Count < second.Count ? -1 : first.Count > second.Count ? 1 : 0);
-            row=AddStatRows(ws, lst, 16, "", "Count");
+            lst.Sort((first, second) => first.Count < second.Count ? -1 : first.Count > second.Count ? 1 : 0);
+            row = AddStatRows(ws, lst, 16, "", "Count");
 
             //Add the Doughnut chart
             var doughtnutChart = ws.Drawings.AddChart("crtExtensionCount", eChartType.DoughnutExploded) as ExcelDoughnutChart;
@@ -279,7 +289,7 @@ namespace EPPlusSamples
             doughtnutChart.Style = eChartStyle.Style26; //3D look
             //Top-10 filesize
             _fileSize.Sort();
-            row=AddStatRows(ws, _fileSize, 29, "Files", "Size");
+            row = AddStatRows(ws, _fileSize, 29, "Files", "Size");
             var barChart = ws.Drawings.AddChart("crtFiles", eChartType.BarClustered3D) as ExcelBarChart;
             //3d Settings
             barChart.View3D.RotX = 0;
@@ -305,6 +315,7 @@ namespace EPPlusSamples
             ws.PrinterSettings.FitToPage = true;
             ws.PrinterSettings.Scale = 67;
         }
+
         /// <summary>
         /// Add statistic-rows to the statistics sheet.
         /// </summary>
@@ -324,22 +335,22 @@ namespace EPPlusSamples
                 using (ExcelRange r = ws.Cells[row, 1, row, 2])
                 {
                     r.Merge = true;
-                    r.Style.Font.SetFromFont(new Font("Arial", 16, FontStyle.Italic));
+                    r.Style.Font.SetFromFont(new Font("Arial", FontStyle.Italic, 16));
                     r.Style.Font.Color.SetColor(Color.White);
                     r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
                     r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                    r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79 , 129, 189));
+                    r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79, 129, 189));
                 }
                 row++;
             }
 
-            int tblStart=row;
+            int tblStart = row;
             //Header 2
             ws.Cells[row, 1].Value = "Name";
             ws.Cells[row, 2].Value = propertyName;
             using (ExcelRange r = ws.Cells[row, 1, row, 2])
             {
-                r.Style.Font.SetFromFont(new Font("Arial", 12, FontStyle.Bold));
+                r.Style.Font.SetFromFont(new Font("Arial", FontStyle.Bold, 12));
             }
 
             row++;
@@ -361,7 +372,7 @@ namespace EPPlusSamples
                     row++;
                 }
             }
-            
+
             //If we have more than 10 items, sum...
             long rest = 0;
             for (int i = 0; i < lst.Count - 10; i++)
@@ -391,6 +402,7 @@ namespace EPPlusSamples
             tbl.Columns[1].TotalsRowFunction = RowFunctions.Sum;
             return row;
         }
+
         /// <summary>
         /// Just alters the colors in the list
         /// </summary>
@@ -401,7 +413,7 @@ namespace EPPlusSamples
             using (ExcelRange rowRange = ws.Cells[row, 1, row, 2])
             {
                 rowRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                if(row % 2==1)
+                if (row % 2 == 1)
                 {
                     rowRange.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
                 }
@@ -418,7 +430,7 @@ namespace EPPlusSamples
             Console.WriteLine("Directory " + dir.Name);
             if (!skipIcons)
             {
-                Bitmap icon = GetIcon(dir.FullName);
+                AnyBitmap icon = GetIcon(dir.FullName);
 
                 ws.Row(row).Height = height;
                 //Add the icon as a picture
@@ -444,15 +456,15 @@ namespace EPPlusSamples
                 if (level < _maxLevels)
                 {
                     row = AddDirectory(ws, subDir, row, height, level + 1, skipIcons);
-                }                           
+                }
             }
-            
+
             //Add files in the directory
             foreach (FileInfo file in dir.GetFiles())
             {
                 if (!skipIcons)
                 {
-                    Bitmap fileIcon = GetIcon(file.FullName);
+                    AnyBitmap fileIcon = GetIcon(file.FullName);
 
                     ws.Row(row).Height = height;
                     if (fileIcon != null)
@@ -467,7 +479,7 @@ namespace EPPlusSamples
                 ws.Cells[row, 4].Value = file.CreationTime;
                 ws.Cells[row, 5].Value = file.LastAccessTime;
 
-                ws.Row(row).OutlineLevel = level+1;
+                ws.Row(row).OutlineLevel = level + 1;
 
                 AddStatistics(file);
 
@@ -475,8 +487,8 @@ namespace EPPlusSamples
             }
 
             //Add a subtotal for the directory
-            if (row -1 > prevRow)
-            { 
+            if (row - 1 > prevRow)
+            {
                 ws.Cells[prevRow, 3].Formula = string.Format("SUBTOTAL(9, {0})", ExcelCellBase.GetAddress(prevRow + 1, 3, row - 1, 3));
             }
             else
@@ -486,8 +498,9 @@ namespace EPPlusSamples
 
             return row;
         }
+
         /// <summary>
-        /// Add statistics to the collections 
+        /// Add statistics to the collections
         /// </summary>
         /// <param name="file"></param>
         private static void AddStatistics(FileInfo file)
@@ -496,14 +509,14 @@ namespace EPPlusSamples
             if (_extStat.ContainsKey(file.Extension))
             {
                 _extStat[file.Extension].Count++;
-                _extStat[file.Extension].Size+=file.Length;
+                _extStat[file.Extension].Size += file.Length;
             }
             else
             {
                 string ext = file.Extension.Length > 0 ? file.Extension.Remove(0, 1) : "";
                 _extStat.Add(file.Extension, new StatItem() { Name = ext, Count = 1, Size = file.Length });
             }
-            
+
             //File top 10;
             if (_fileSize.Count < 10)
             {
@@ -513,24 +526,24 @@ namespace EPPlusSamples
                     _fileSize.Sort();
                 }
             }
-            else if(_fileSize[0].Size < file.Length)
+            else if (_fileSize[0].Size < file.Length)
             {
                 _fileSize.RemoveAt(0);
                 _fileSize.Add(new StatItem { Name = file.Name, Size = file.Length });
                 _fileSize.Sort();
             }
         }
+
         /// <summary>
         /// Gets the icon for a file or directory
         /// </summary>
         /// <param name="FileName"></param>
         /// <returns></returns>
-        private static Bitmap GetIcon(string FileName)
+        private static AnyBitmap GetIcon(string FileName)
         {
             if (File.Exists(FileName))
             {
-                var bmp=System.Drawing.Icon.ExtractAssociatedIcon(FileName).ToBitmap();
-                return new Bitmap(bmp, new Size(16, 16));
+                return new AnyBitmap(AnyBitmap.FromFile(FileName), 16, 16);
             }
             else
             {

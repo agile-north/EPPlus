@@ -13,29 +13,30 @@
 
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
  * The GNU Lesser General Public License can be viewed at http://www.opensource.org/licenses/lgpl-license.php
  * If you unfamiliar with this license or have questions about it, here is an http://www.gnu.org/licenses/gpl-faq.html
  *
- * All code and executables are provided "as is" with no warranty either express or implied. 
+ * All code and executables are provided "as is" with no warranty either express or implied.
  * The author accepts no liability for any damage or loss of business that this product may cause.
  *
  * Code change notes:
- * 
+ *
  * Author							Change						Date
  * ******************************************************************************
  * Jan Källman		Initial Release		        2010-06-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Globalization;
 using System.Drawing;
-
+using IronSoftware.Drawing;
 
 namespace OfficeOpenXml.Drawing.Vml
 {
@@ -44,12 +45,14 @@ namespace OfficeOpenXml.Drawing.Vml
     /// </summary>
     public class ExcelVmlDrawingPicture : ExcelVmlDrawingBase
     {
-        ExcelWorksheet _worksheet;
+        private ExcelWorksheet _worksheet;
+
         internal ExcelVmlDrawingPicture(XmlNode topNode, XmlNamespaceManager ns, ExcelWorksheet ws) :
             base(topNode, ns)
         {
             _worksheet = ws;
         }
+
         /// <summary>
         /// Position ID
         /// </summary>
@@ -60,6 +63,7 @@ namespace OfficeOpenXml.Drawing.Vml
                 return GetXmlNodeString("@id");
             }
         }
+
         /// <summary>
         /// The width in points
         /// </summary>
@@ -71,9 +75,10 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             set
             {
-                SetStyleProp("width",value.ToString(CultureInfo.InvariantCulture) + "pt");
+                SetStyleProp("width", value.ToString(CultureInfo.InvariantCulture) + "pt");
             }
         }
+
         /// <summary>
         /// The height in points
         /// </summary>
@@ -88,6 +93,7 @@ namespace OfficeOpenXml.Drawing.Vml
                 SetStyleProp("height", value.ToString(CultureInfo.InvariantCulture) + "pt");
             }
         }
+
         /// <summary>
         /// Margin Left in points
         /// </summary>
@@ -102,6 +108,7 @@ namespace OfficeOpenXml.Drawing.Vml
                 SetStyleProp("left", value.ToString(CultureInfo.InvariantCulture));
             }
         }
+
         /// <summary>
         /// Margin top in points
         /// </summary>
@@ -116,6 +123,7 @@ namespace OfficeOpenXml.Drawing.Vml
                 SetStyleProp("top", value.ToString(CultureInfo.InvariantCulture));
             }
         }
+
         /// <summary>
         /// The Title of the image
         /// </summary>
@@ -127,13 +135,14 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             set
             {
-                SetXmlNodeString("v:imagedata/@o:title",value);
+                SetXmlNodeString("v:imagedata/@o:title", value);
             }
         }
+
         /// <summary>
         /// The image
         /// </summary>
-        public Image Image
+        public AnyBitmap Image
         {
             get
             {
@@ -141,7 +150,7 @@ namespace OfficeOpenXml.Drawing.Vml
                 if (pck.PartExists(ImageUri))
                 {
                     var part = pck.GetPart(ImageUri);
-                    return Image.FromStream(part.GetStream());
+                    return AnyBitmap.FromStream(part.GetStream());
                 }
                 else
                 {
@@ -149,11 +158,13 @@ namespace OfficeOpenXml.Drawing.Vml
                 }
             }
         }
+
         internal Uri ImageUri
         {
             get;
             set;
         }
+
         internal string RelId
         {
             get
@@ -162,9 +173,10 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             set
             {
-                SetXmlNodeString("v:imagedata/@o:relid",value);
+                SetXmlNodeString("v:imagedata/@o:relid", value);
             }
-        }        
+        }
+
         /// <summary>
         /// Determines whether an image will be displayed in black and white
         /// </summary>
@@ -172,7 +184,7 @@ namespace OfficeOpenXml.Drawing.Vml
         {
             get
             {
-                return GetXmlNodeString("v:imagedata/@bilevel")=="t";
+                return GetXmlNodeString("v:imagedata/@bilevel") == "t";
             }
             set
             {
@@ -186,6 +198,7 @@ namespace OfficeOpenXml.Drawing.Vml
                 }
             }
         }
+
         /// <summary>
         /// Determines whether a picture will be displayed in grayscale mode
         /// </summary>
@@ -193,7 +206,7 @@ namespace OfficeOpenXml.Drawing.Vml
         {
             get
             {
-                return GetXmlNodeString("v:imagedata/@grayscale")=="t";
+                return GetXmlNodeString("v:imagedata/@grayscale") == "t";
             }
             set
             {
@@ -207,6 +220,7 @@ namespace OfficeOpenXml.Drawing.Vml
                 }
             }
         }
+
         /// <summary>
         /// Defines the intensity of all colors in an image
         /// Default value is 1
@@ -216,7 +230,7 @@ namespace OfficeOpenXml.Drawing.Vml
             get
             {
                 string v = GetXmlNodeString("v:imagedata/@gain");
-                return GetFracDT(v,1);
+                return GetFracDT(v, 1);
             }
             set
             {
@@ -234,6 +248,7 @@ namespace OfficeOpenXml.Drawing.Vml
                 }
             }
         }
+
         /// <summary>
         /// Defines the amount of contrast for an image
         /// Default value is 0;
@@ -243,7 +258,7 @@ namespace OfficeOpenXml.Drawing.Vml
             get
             {
                 string v = GetXmlNodeString("v:imagedata/@gamma");
-                return GetFracDT(v,0);
+                return GetFracDT(v, 0);
             }
             set
             {
@@ -257,6 +272,7 @@ namespace OfficeOpenXml.Drawing.Vml
                 }
             }
         }
+
         /// <summary>
         /// Defines the intensity of black in an image
         /// Default value is 0
@@ -282,6 +298,7 @@ namespace OfficeOpenXml.Drawing.Vml
         }
 
         #region Private Methods
+
         private double GetFracDT(string v, double def)
         {
             double d;
@@ -306,6 +323,7 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             return d;
         }
+
         private void SetStyleProp(string propertyName, string value)
         {
             string style = GetXmlNodeString("@style");
@@ -330,6 +348,7 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             SetXmlNodeString("@style", newStyle.Substring(0, newStyle.Length - 1));
         }
+
         private double GetStyleProp(string propertyName)
         {
             string style = GetXmlNodeString("@style");
@@ -352,6 +371,7 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             return 0;
         }
-        #endregion
+
+        #endregion Private Methods
     }
 }

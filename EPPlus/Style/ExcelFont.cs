@@ -13,26 +13,28 @@
 
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
  * The GNU Lesser General Public License can be viewed at http://www.opensource.org/licenses/lgpl-license.php
  * If you unfamiliar with this license or have questions about it, here is an http://www.gnu.org/licenses/gpl-faq.html
  *
- * All code and executables are provided "as is" with no warranty either express or implied. 
+ * All code and executables are provided "as is" with no warranty either express or implied.
  * The author accepts no liability for any damage or loss of business that this product may cause.
  *
  * Code change notes:
- * 
+ *
  * Author							Change						Date
  * ******************************************************************************
  * Jan Källman		                Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using IronSoftware.Drawing;
 
 namespace OfficeOpenXml.Style
 {
@@ -47,6 +49,7 @@ namespace OfficeOpenXml.Style
         {
             Index = index;
         }
+
         /// <summary>
         /// The name of the font
         /// </summary>
@@ -61,6 +64,7 @@ namespace OfficeOpenXml.Style
                 _ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Font, eStyleProperty.Name, value, _positionID, _address));
             }
         }
+
         /// <summary>
         /// The Size of the font
         /// </summary>
@@ -75,6 +79,7 @@ namespace OfficeOpenXml.Style
                 _ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Font, eStyleProperty.Size, value, _positionID, _address));
             }
         }
+
         /// <summary>
         /// Font family
         /// </summary>
@@ -89,6 +94,7 @@ namespace OfficeOpenXml.Style
                 _ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Font, eStyleProperty.Family, value, _positionID, _address));
             }
         }
+
         /// <summary>
         /// Cell color
         /// </summary>
@@ -99,6 +105,7 @@ namespace OfficeOpenXml.Style
                 return new ExcelColor(_styles, _ChangedEvent, _positionID, _address, eStyleClass.Font, this);
             }
         }
+
         /// <summary>
         /// Scheme
         /// </summary>
@@ -113,6 +120,7 @@ namespace OfficeOpenXml.Style
                 _ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Font, eStyleProperty.Scheme, value, _positionID, _address));
             }
         }
+
         /// <summary>
         /// Font-bold
         /// </summary>
@@ -127,6 +135,7 @@ namespace OfficeOpenXml.Style
                 _ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Font, eStyleProperty.Bold, value, _positionID, _address));
             }
         }
+
         /// <summary>
         /// Font-italic
         /// </summary>
@@ -141,6 +150,7 @@ namespace OfficeOpenXml.Style
                 _ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Font, eStyleProperty.Italic, value, _positionID, _address));
             }
         }
+
         /// <summary>
         /// Font-Strikeout
         /// </summary>
@@ -155,6 +165,7 @@ namespace OfficeOpenXml.Style
                 _ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Font, eStyleProperty.Strike, value, _positionID, _address));
             }
         }
+
         /// <summary>
         /// Font-Underline
         /// </summary>
@@ -177,6 +188,7 @@ namespace OfficeOpenXml.Style
                 //_ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Font, eStyleProperty.UnderlineType, value, _positionID, _address));
             }
         }
+
         public ExcelUnderLineType UnderLineType
         {
             get
@@ -188,6 +200,7 @@ namespace OfficeOpenXml.Style
                 _ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Font, eStyleProperty.UnderlineType, value, _positionID, _address));
             }
         }
+
         /// <summary>
         /// Font-Vertical Align
         /// </summary>
@@ -209,13 +222,14 @@ namespace OfficeOpenXml.Style
                 _ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Font, eStyleProperty.VerticalAlign, value, _positionID, _address));
             }
         }
+
         /// <summary>
         /// Set the font from a Font object
         /// </summary>
         /// <param name="Font"></param>
         public void SetFromFont(Font Font)
         {
-            Name = Font.Name;
+            Name = Font.FamilyName;
             //Family=fnt.FontFamily.;
             Size = (int)Font.Size;
             Strike = Font.Strikeout;
@@ -226,7 +240,7 @@ namespace OfficeOpenXml.Style
 
         internal override string Id
         {
-            get 
+            get
             {
                 return Name + Size.ToString() + Family.ToString() + Scheme.ToString() + Bold.ToString()[0] + Italic.ToString()[0] + Strike.ToString()[0] + UnderLine.ToString()[0] + VerticalAlign;
             }
